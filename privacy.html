@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy — MIKA Labs</title>
+<meta name="description" content="How mikalaboratories.com handles personal data.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--navy:#0A2540;--ink:#1A1F36;--text:#425466;--soft:#5E6D82;--line:#E3E8EE;--tint:#F6F9FC;--accent:#635BFF}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--text);font-family:Inter,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--navy)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+h1,h2{margin:0;color:var(--navy);text-wrap:balance}
+.wrap{max-width:1088px;margin:0 auto;padding-left:max(24px,env(safe-area-inset-left));padding-right:max(24px,env(safe-area-inset-right))}
+.eyebrow{color:var(--accent);font-weight:600;font-size:15px}
+
+.hero{position:relative;isolation:isolate}
+.mesh{position:absolute;inset:0;z-index:-1;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,#000 40%,transparent);mask-image:linear-gradient(180deg,#000 40%,transparent)}
+.mesh::before{content:"";position:absolute;inset:-40%;
+  background:radial-gradient(28% 32% at 20% 30%,#FF9A62 0%,transparent 70%),radial-gradient(30% 34% at 45% 20%,#FF5CAA 0%,transparent 70%),radial-gradient(32% 36% at 70% 35%,#A960EE 0%,transparent 70%),radial-gradient(30% 34% at 88% 15%,#00D4FF 0%,transparent 70%),radial-gradient(34% 38% at 60% 60%,#635BFF 0%,transparent 70%),#FFCB57;
+  animation:drift 18s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate(0,0) rotate(0)}50%{transform:translate(4%,-3%) rotate(6deg)}100%{transform:translate(-4%,3%) rotate(-5deg)}}
+nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0}
+.logo{display:flex;align-items:center;gap:10px;color:var(--navy);text-decoration:none}
+.logo span{font-size:14px;font-weight:500;letter-spacing:.32em}
+.back{color:#fff;font-weight:500;font-size:15px;text-decoration:none;background:rgba(255,255,255,.22);padding:7px 16px;border-radius:999px}
+.back:hover{color:#fff;opacity:.85}
+.herobody{padding:72px 0 96px}
+.herobody h1{margin-top:10px;font-size:clamp(40px,6vw,64px);font-weight:700;letter-spacing:-.04em;line-height:1.05;color:var(--ink)}
+.herobody p{margin:18px 0 0;font-size:19px;color:#2E3A59;max-width:620px}
+
+main{padding:16px 0 96px}
+.doc{max-width:720px}
+.doc section{padding:28px 0;border-top:1px solid var(--line)}
+.doc h2{font-size:22px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px}
+.doc p{margin:0}
+.doc p+p,.doc p+ul,.doc ul+p{margin-top:12px}
+.doc ul{margin:0;padding-left:20px}
+.doc li+li{margin-top:6px}
+.doc b{color:var(--navy);font-weight:600}
+.updated{font-size:14px;color:var(--soft)}
+
+footer{background:var(--tint);border-top:1px solid var(--line);font-size:13px;color:var(--soft)}
+footer .wrap{padding-top:32px;padding-bottom:40px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px;line-height:1.8}
+footer b{color:var(--navy);font-weight:600}
+@media (prefers-reduced-motion:reduce){.mesh::before{animation:none}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="mesh" aria-hidden="true"></div>
+  <div class="wrap">
+    <nav aria-label="Main">
+      <a class="logo" href="index.html" aria-label="Home">
+        <svg width="44" height="31" viewBox="0 0 82 58" aria-hidden="true"><path d="M4 44V6l17 26L38 6v38M48 14v38h30" fill="none" stroke="#0A2540" stroke-width="3.4"/></svg>
+        <span>MIKA LABS</span>
+      </a>
+      <a class="back" href="index.html">Back to site</a>
+    </nav>
+    <div class="herobody">
+      <span class="eyebrow">Privacy</span>
+      <h1>Your data on this site.</h1>
+      <p>Short version: no cookies, no analytics, no tracking, no forms. We only get your details if you email us or book a call.</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="doc">
+    <p class="updated">Last updated: 3 November 2026</p>
+
+    <section>
+      <h2>Who is responsible</h2>
+      <p><b>MIKA LABS ΜΟΝΟΠΡΟΣΩΠΗ Ι.Κ.Ε.</b> (MIKA LABS SINGLE MEMBER P.C.), Γ.Ε.ΜΗ. 196695102000, Α.Φ.Μ. 803427107, Athens, Greece, is the data controller for this website.</p>
+      <p>For any privacy question or request, email <a href="mailto:info@mikalaboratories.com">info@mikalaboratories.com</a>.</p>
+    </section>
+
+    <section>
+      <h2>What happens when you visit</h2>
+      <ul>
+        <li><b>No cookies.</b> The site sets no cookies and uses no local storage.</li>
+        <li><b>No analytics or tracking.</b> No Google Analytics, no pixels, no ad networks.</li>
+        <li><b>Fonts are hosted here.</b> We don't load fonts from Google or any other third party.</li>
+        <li><b>Hosting.</b> The site is hosted on GitHub Pages (GitHub, Inc.). Like any web server, GitHub receives your IP address and browser details to deliver the page and keep the service secure. We don't get access to these logs. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub's privacy statement</a>.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>If you email us</h2>
+      <p>We receive your email address, name and whatever you write. We use it only to reply and, if we work together, to handle that work. Legal basis: taking steps at your request before a contract, or our legitimate interest in answering messages (GDPR Art. 6(1)(b) and (f)).</p>
+      <p>We keep correspondence for as long as needed for that purpose, and longer only where Greek tax or accounting law requires it.</p>
+    </section>
+
+    <section id="booking">
+      <h2>If you book a call</h2>
+      <p>Nothing from Google loads until you click <b>Book an appointment</b>. After you click, the booking calendar is provided by Google Calendar, so Google receives your IP address and the details you enter (name, email, time). Google may process this data outside the EU, under the EU Commission's standard contractual clauses and the EU–US Data Privacy Framework. See <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</p>
+      <p>We receive your name, email and chosen time to hold the meeting. Google Meet details are added to the invitation. We delete booking details once they're no longer needed.</p>
+    </section>
+
+    <section>
+      <h2>Your rights</h2>
+      <p>Under the GDPR you can ask us to access, correct or delete your data, to restrict or object to its use, or to receive it in a portable format. Email <a href="mailto:info@mikalaboratories.com">info@mikalaboratories.com</a> and we'll reply within one month.</p>
+      <p>You can also complain to the Hellenic Data Protection Authority (<a href="https://www.dpa.gr" target="_blank" rel="noopener">dpa.gr</a>).</p>
+    </section>
+
+    <section>
+      <h2>Changes</h2>
+      <p>If the site starts using cookies, analytics or forms, we'll update this page first.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>MIKA LABS ΜΟΝΟΠΡΟΣΩΠΗ Ι.Κ.Ε.</b> · MIKA LABS SINGLE MEMBER P.C.</span>
+    <span>Γ.Ε.ΜΗ. 196695102000 · Α.Φ.Μ. 803427107 · Δ.Ο.Υ. ΚΕΦΟΔΕ Αττικής</span>
+  </div>
+</footer>
+
+</body>
+</html>
