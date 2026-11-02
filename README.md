@@ -19,7 +19,4 @@ Static site for MIKA LABS ΜΟΝΟΠΡΟΣΩΠΗ Ι.Κ.Ε., hosted on GitHub Pag
 
 Every push to `main` redeploys the site.
 
-## To update before going live
-
-- Replace `hello@mikalabs.gr` in `company.html` with the real company email once it exists.
-- Update the email in `alexandros-mikelis.vcf` and `card.html` to the company address.
+Contact email used across all pages: `info@mikalaboratories.com`.
