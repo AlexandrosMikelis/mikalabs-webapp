@@ -9,9 +9,7 @@
 <meta property="og:description" content="Electrical &amp; Computer Engineer. AI/ML, backend and process automation.">
 <meta property="og:type" content="profile">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{--navy:#0A2540;--ink:#1A1F36;--text:#425466;--soft:#5E6D82;--line:#E3E8EE;--tint:#F6F9FC;--accent:#635BFF}
 *{box-sizing:border-box}
@@ -87,8 +85,11 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:16px;paddi
 .contact h2{margin-top:10px;font-size:clamp(30px,4vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .contact p{margin-top:16px;max-width:480px}
 .contact .btnrow{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
-.contact .btnrow button{background:transparent!important;color:var(--accent)!important;border:1.5px solid var(--accent)!important;font:600 16px Inter,"Helvetica Neue",Arial,sans-serif!important;padding:12px 24px!important;border-radius:999px!important;height:auto!important;margin:0!important;cursor:pointer;transition:background .2s,color .2s}
-.contact .btnrow button:hover{background:var(--accent)!important;color:#fff!important}
+.btn-outline{display:inline-flex;align-items:center;color:var(--accent);border:1.5px solid var(--accent);font-weight:600;font-size:16px;padding:12px 24px;border-radius:999px;transition:background .2s,color .2s}
+.btn-outline:hover{background:var(--accent);color:#fff}
+.contact .btnrow button{display:none!important} /* Google's own button; we trigger it from #book */
+.contact p.note{margin-top:14px;font-size:13px;color:var(--soft)}
+.contact p.note a{color:var(--soft);text-decoration:underline}
 /* Google booking popup: its iframe is transparent, so the page shows through without this */
 iframe[src*="calendar.google.com/calendar/appointments"]{background:#fff;color-scheme:light}
 .fields{display:flex;flex-direction:column;gap:20px}
@@ -255,24 +256,36 @@ footer b{color:var(--navy);font-weight:600}
       <p>Greek native, English at IELTS Academic 7.5 (C1–C2). Former coordinator of the IEEE Student Branch programming group in Patras, and an Erasmus+ Youth Exchange participant in Berlin.</p>
       <div class="btnrow">
         <a class="btn" href="mailto:info@mikalaboratories.com">Email me</a>
-        <!-- Google Calendar Appointment Scheduling begin -->
-        <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-        <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-        <script>
-        (function() {
-          var target = document.currentScript;
-          window.addEventListener('load', function() {
-            calendar.schedulingButton.load({
-              url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2uSMRcusasAb9UbEQk8wzUtKJX76tjT8G-LeVEFuwbSoPy_HSFBeieLZFJNJv_6_ADLheidv-x?gv=true',
-              color: '#635BFF',
-              label: 'Book an appointment',
-              target,
-            });
-          });
-        })();
-        </script>
-        <!-- end Google Calendar Appointment Scheduling -->
+        <a class="btn-outline" id="book" href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ2uSMRcusasAb9UbEQk8wzUtKJX76tjT8G-LeVEFuwbSoPy_HSFBeieLZFJNJv_6_ADLheidv-x?gv=true" target="_blank" rel="noopener">Book an appointment</a>
+        <span id="book-slot" hidden></span>
       </div>
+      <p class="note">Booking opens Google Calendar, which is subject to <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's privacy policy</a>.</p>
+      <script>
+      /* GDPR: Google's scheduling script (and the Google fonts it pulls) loads only after the visitor clicks. */
+      (function () {
+        var link = document.getElementById('book'), slot = document.getElementById('book-slot'), state = 'idle';
+        function openPopup() { var b = slot.parentNode.querySelector('button'); if (b) b.click(); else window.open(link.href, '_blank', 'noopener'); }
+        link.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (state === 'ready') return openPopup();
+          if (state === 'loading') return;
+          state = 'loading';
+          var css = document.createElement('link');
+          css.rel = 'stylesheet'; css.href = 'https://calendar.google.com/calendar/scheduling-button-script.css';
+          document.head.appendChild(css);
+          var js = document.createElement('script');
+          js.src = 'https://calendar.google.com/calendar/scheduling-button-script.js';
+          js.onload = function () {
+            try {
+              calendar.schedulingButton.load({ url: link.href, color: '#635BFF', label: 'Book an appointment', target: slot });
+              state = 'ready'; setTimeout(openPopup, 0);
+            } catch (err) { state = 'idle'; window.open(link.href, '_blank', 'noopener'); }
+          };
+          js.onerror = function () { state = 'idle'; window.open(link.href, '_blank', 'noopener'); };
+          document.head.appendChild(js);
+        });
+      })();
+      </script>
     </div>
     <div class="fields">
       <div class="field"><span>Email</span><a href="mailto:info@mikalaboratories.com">info@mikalaboratories.com</a></div>
