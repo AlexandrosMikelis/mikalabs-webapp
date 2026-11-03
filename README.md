@@ -1,22 +1,30 @@
 # MIKA Labs website
 
-Static site for MIKA LABS ΜΟΝΟΠΡΟΣΩΠΗ Ι.Κ.Ε., hosted on GitHub Pages.
+Site for MIKA LABS ΜΟΝΟΠΡΟΣΩΠΗ Ι.Κ.Ε. React + Vite, hosted on GitHub Pages.
 
-## Files
+## Routes
 
-- `index.html` — the website (currently Alexandros Mikelis's CV)
-- `company.html` — the MIKA Labs company site, hidden for now (not linked, `noindex`). To bring it back, rename it to `index.html`
-- `card.html` — digital business card (not linked from the site; share it via its URL or QR)
-- `alexandros-mikelis.vcf` — contact file used by "Save to contacts" on the card
-- `favicon.svg` — ML logo favicon
+- `/` — MIKA Labs company page: services, how we work, contact (`src/pages/Home.jsx`)
+- `/team` — Alexandros Mikelis's CV (`src/pages/Team.jsx`)
+- `/privacy` — privacy page (`src/pages/Privacy.jsx`)
+- `/card.html` — digital business card, plain static page in `public/` (not linked; share via URL or QR)
+
+Shared pieces: `src/components/Layout.jsx` (nav, hero, footer), `BookButton.jsx` (Google Calendar booking,
+loaded only on click for GDPR), `Icons.jsx`. Styles in `src/styles.css`. Static files (fonts, favicon, logo,
+CNAME, vcf) live in `public/`.
+
+## Develop
+
+```sh
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # outputs dist/ (index.html is copied to 404.html so /team works on GitHub Pages)
+```
 
 ## Deploy
 
-1. Settings → Pages → Build and deployment → Source: **Deploy from a branch**, Branch: **main** / **(root)**.
-2. Custom domain: enter the domain in Settings → Pages, then add the DNS records GitHub shows
-   (four A records for the bare domain, and a `www` CNAME to `alexandrosmikelis.github.io`).
-3. Tick **Enforce HTTPS** once the certificate is issued.
-
-Every push to `main` redeploys the site.
+`.github/workflows/deploy.yml` builds and deploys on every push to `main`.
+One-time: Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+Custom domain comes from `public/CNAME`.
 
 Contact email used across all pages: `info@mikalaboratories.com`.
