@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 export const EMAIL = 'info@mikalaboratories.com'
@@ -13,22 +14,38 @@ function Logo() {
   )
 }
 
+/* Fixed navbar: transparent over the gradient, frosted white once the page scrolls. */
 export function Nav() {
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <nav aria-label="Main">
-      <Logo />
-      <div className="links">
-        <Link className="hide-sm" to="/#services">Services</Link>
-        <Link className="hide-sm" to="/#vision">Vision</Link>
-        <NavLink to="/about">About</NavLink>
-        <Link className="pill" to="/#contact">Contact</Link>
+    <div className={`navbar${scrolled ? ' scrolled' : ''}`}>
+      <div className="wrap">
+        <nav aria-label="Main">
+          <Logo />
+          <div className="links">
+            <Link className="hide-sm" to="/#services">Services</Link>
+            <Link className="hide-sm" to="/#vision">Vision</Link>
+            <NavLink to="/about">About</NavLink>
+            <Link className="pill" to="/#contact">Contact</Link>
+          </div>
+        </nav>
       </div>
-    </nav>
+    </div>
   )
 }
 
 export function Hero({ children, short = false }) {
   return (
+    <>
+    {/* outside .hero: its isolation would trap the navbar's z-index under the page content */}
+    <Nav />
     <header className="hero">
       <div className="mesh" aria-hidden="true" style={{
         // resume the drift where the previous page left it (36s = one full alternate cycle)
@@ -36,10 +53,10 @@ export function Hero({ children, short = false }) {
         ...(short && { maskImage: 'linear-gradient(180deg,#000 40%,transparent)', WebkitMaskImage: 'linear-gradient(180deg,#000 40%,transparent)' }),
       }} />
       <div className="wrap">
-        <Nav />
         {children}
       </div>
     </header>
+    </>
   )
 }
 
