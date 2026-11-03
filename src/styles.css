@@ -75,7 +75,8 @@ nav{display:flex;align-items:center;justify-content:space-between;gap:16px;paddi
 .contact h2{margin-top:10px;font-size:clamp(30px,4vw,42px);font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .contact p{margin-top:16px;max-width:480px}
 .contact .btnrow{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:16px}
-.contact .btnrow button{display:none!important} /* Google's own button; we trigger it from our link */
+.book{display:inline-flex}
+.book button{display:none!important} /* Google's own button; we trigger it from our link */
 .contact p.note{margin-top:14px;font-size:13px;color:var(--soft)}
 .contact p.note a{color:var(--soft);text-decoration:underline}
 /* Google booking popup: its iframe is transparent, so the page shows through without this */

@@ -44,7 +44,7 @@ export default function Home() {
           <h1>AI &amp; automation, built around you.</h1>
           <p>From AI agents to automated workflows and the systems underneath them, we design, build and run the technology that takes manual work off you and your team.</p>
           <div className="ctas">
-            <a className="btn" href={`mailto:${EMAIL}`}>Contact us</a>
+            <BookButton label="Book a demo" className="btn" />
             <a className="text" href="#services">Explore our services</a>
           </div>
         </div>
@@ -87,8 +87,8 @@ export default function Home() {
             <h2>Which process should run itself?</h2>
             <p>Tell us where your team loses the most time. We'll tell you honestly what can be automated, and what it takes.</p>
             <div className="btnrow">
-              <a className="btn" href={`mailto:${EMAIL}`}>Contact us</a>
-              <BookButton />
+              <BookButton label="Book a demo" className="btn" />
+              <a className="btn-outline" href={`mailto:${EMAIL}`}>Email us</a>
             </div>
             <BookingNote />
           </div>

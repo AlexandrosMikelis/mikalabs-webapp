@@ -7,7 +7,7 @@ const BOOKING_URL =
 /* GDPR: Google's scheduling script (and the Google fonts it pulls) loads only after the visitor clicks. */
 let scriptState = 'idle' // idle | loading | ready (shared across pages, the script loads once)
 
-export function BookButton() {
+export function BookButton({ label = 'Book an appointment', className = 'btn-outline' }) {
   const slot = useRef(null)
   const rendered = useRef(false)
 
@@ -47,10 +47,10 @@ export function BookButton() {
   }
 
   return (
-    <>
-      <a className="btn-outline" href={BOOKING_URL} target="_blank" rel="noopener" onClick={onClick}>Book an appointment</a>
+    <span className="book">
+      <a className={className} href={BOOKING_URL} target="_blank" rel="noopener" onClick={onClick}>{label}</a>
       <span ref={slot} hidden />
-    </>
+    </span>
   )
 }
 
