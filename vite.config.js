@@ -3,5 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',
+  // Relative asset URLs: works on the custom domain (/) and on github.io/mikalabs-webapp/
+  base: './',
 })
