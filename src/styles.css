@@ -133,11 +133,6 @@ iframe[src*="calendar.google.com/calendar/appointments"]{background:#fff;color-s
 .person .actions a:hover{color:var(--accent)}
 .linkbtn{border:0;background:none;padding:0;font:inherit;font-size:15px;font-weight:600;color:var(--accent);cursor:pointer}
 .linkbtn:hover{color:var(--navy)}
-.person.open{border:1.5px dashed #C9D2DC;background:var(--tint);justify-content:center;align-items:flex-start;padding:28px;gap:8px}
-.person.open:hover{box-shadow:none;transform:none}
-.person.open .plus{width:44px;height:44px;border-radius:50%;border:1.5px dashed #9FB3C8;display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--soft);margin-bottom:6px}
-.person.open h3{font-size:18px}
-.person.open p{margin:0}
 
 /* about: company details */
 .company-box{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:40px;padding:36px;border:1px solid var(--line);border-radius:16px;background:var(--tint)}

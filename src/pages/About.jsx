@@ -80,12 +80,6 @@ export default function About() {
                 </div>
               </div>
             </article>
-
-            <article className="person open">
-              <div className="plus" aria-hidden="true">+</div>
-              <h3>We're growing</h3>
-              <p>Engineer who likes AI and real systems? Say hello at <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.</p>
-            </article>
           </div>
         </section>
 
