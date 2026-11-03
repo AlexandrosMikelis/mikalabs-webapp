@@ -14,7 +14,7 @@ const TITLES = {
 function ScrollManager() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
-    document.title = TITLES[pathname] || TITLES['/']
+    document.title = TITLES[pathname.replace(/(.)\/$/, '$1')] || TITLES['/']
     if (hash) {
       const el = document.getElementById(hash.slice(1))
       if (el) { el.scrollIntoView(); return }
