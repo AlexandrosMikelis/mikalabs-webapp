@@ -1,6 +1,7 @@
 import { Hero, Footer, EMAIL } from '../components/Layout.jsx'
 import { BookButton, BookingNote } from '../components/BookButton.jsx'
 import { Icon } from '../components/Icons.jsx'
+import Cycle from '../components/Cycle.jsx'
 
 const SERVICES = [
   {
@@ -69,15 +70,12 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="how" className="how">
+        <section id="vision" className="how">
           <div className="wrap">
-            <span className="eyebrow">How we work</span>
-            <h2>From a manual process to a system that runs itself.</h2>
-            <div className="steps">
-              {STEPS.map(([n, h, p]) => (
-                <div className="step" key={n}><span className="mono">{n}</span><h3>{h}</h3><p>{p}</p></div>
-              ))}
-            </div>
+            <span className="eyebrow">Vision</span>
+            <h2>Every manual process, turned into a system that runs itself.</h2>
+            <p className="lede">We see automation as a loop, not a one-off project: map the work, build the foundations, add the AI, run it, and keep improving.</p>
+            <Cycle steps={STEPS} />
           </div>
         </section>
 

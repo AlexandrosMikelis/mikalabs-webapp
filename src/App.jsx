@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import Home from './pages/Home.jsx'
-import Team from './pages/Team.jsx'
+import About from './pages/About.jsx'
 import Privacy from './pages/Privacy.jsx'
 
 const TITLES = {
   '/': 'MIKA Labs — AI & automation',
-  '/team': 'Team — Alexandros Mikelis · MIKA Labs',
+  '/about': 'About — MIKA Labs',
   '/privacy': 'Privacy — MIKA Labs',
 }
 
@@ -17,9 +17,10 @@ function ScrollManager() {
     document.title = TITLES[pathname.replace(/(.)\/$/, '$1')] || TITLES['/']
     if (hash) {
       const el = document.getElementById(hash.slice(1))
-      if (el) { el.scrollIntoView(); return }
+      if (el) el.scrollIntoView()
+      return // hashes like #cv open UI instead of scrolling
     }
-    window.scrollTo(0, 0)
+    window.scrollTo({ top: 0, behavior: 'instant' }) // jump, the page fade-in is the transition
   }, [pathname, hash])
   return null
 }
@@ -30,7 +31,8 @@ export default function App() {
       <ScrollManager />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/team" element={<Team />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/team" element={<Navigate to="/about" replace />} />
         <Route path="/privacy" element={<Privacy />} />
         {/* old static URLs */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />

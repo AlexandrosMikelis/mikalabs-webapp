@@ -19,8 +19,8 @@ export function Nav() {
       <Logo />
       <div className="links">
         <Link className="hide-sm" to="/#services">Services</Link>
-        <Link className="hide-sm" to="/#how">How we work</Link>
-        <NavLink to="/team">Team</NavLink>
+        <Link className="hide-sm" to="/#vision">Vision</Link>
+        <NavLink to="/about">About</NavLink>
         <Link className="pill" to="/#contact">Contact</Link>
       </div>
     </nav>
@@ -30,7 +30,11 @@ export function Nav() {
 export function Hero({ children, short = false }) {
   return (
     <header className="hero">
-      <div className="mesh" aria-hidden="true" style={short ? { maskImage: 'linear-gradient(180deg,#000 40%,transparent)', WebkitMaskImage: 'linear-gradient(180deg,#000 40%,transparent)' } : undefined} />
+      <div className="mesh" aria-hidden="true" style={{
+        // resume the drift where the previous page left it (36s = one full alternate cycle)
+        '--mesh-t': `-${Math.round(performance.now() % 36000)}ms`,
+        ...(short && { maskImage: 'linear-gradient(180deg,#000 40%,transparent)', WebkitMaskImage: 'linear-gradient(180deg,#000 40%,transparent)' }),
+      }} />
       <div className="wrap">
         <Nav />
         {children}
