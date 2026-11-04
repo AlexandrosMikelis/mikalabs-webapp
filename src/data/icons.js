@@ -1,0 +1,22 @@
+// Shared 24x24 stroke icon paths (diagrams, use cases). Plain JS so Node scripts can import it.
+export const ICONS = {
+  mail: 'M4 7h16v10H4z M4 7l8 6 8-6',
+  doc: 'M7 3h7l4 4v14H7z M14 3v4h4 M10 12h5 M10 16h5',
+  form: 'M6 4h12v17H6z M9 9h6 M9 13h6 M9 17h3',
+  db: 'M5 6c0-1.7 3.1-3 7-3s7 1.3 7 3-3.1 3-7 3-7-1.3-7-3z M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6 M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3',
+  users: 'M9 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6 M16 5.5a3 3 0 0 1 0 5.5 M18 14.5c2 .8 3 2.8 3 5.5',
+  chat: 'M4 5h16v11H9l-5 4z',
+  route: 'M4 12h6 M10 12l7-6 M10 12l7 6 M17 6h3 M17 18h3',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M20 20l-4-4',
+  bolt: 'M13 3 5 14h6l-1 7 8-11h-6z',
+  shield: 'M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z M9 12l2 2 4-4',
+  tool: 'M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z',
+  person: 'M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8',
+  tag: 'M3 12V4h8l9 9-8 8z M7.5 8h.01',
+  scan: 'M4 8V4h4 M16 4h4v4 M20 16v4h-4 M8 20H4v-4 M7 12h10',
+  globe: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M3 12h18 M12 3c2.5 2.5 3.5 5.5 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-5.5-3.5-9s1-6.5 3.5-9z',
+  inbox: 'M4 13h4l2 3h4l2-3h4 M4 13l2-8h12l2 8v6H4z',
+  card: 'M3 6h18v12H3z M3 10h18',
+  ticket: 'M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z',
+  scale: 'M12 4v16 M7 20h10 M5 8h14 M5 8l-3 6h6z M19 8l-3 6h6z',
+}

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Hero, Footer, EMAIL } from '../components/Layout.jsx'
-import { BookButton, BookingNote } from '../components/BookButton.jsx'
+import CtaBand from '../components/CtaBand.jsx'
 import { Icon } from '../components/Icons.jsx'
 import CvDrawer from '../components/CvDrawer.jsx'
+import { COMPANY } from '../data/company.js'
 
 const LINKEDIN = 'https://www.linkedin.com/in/alexandros-mikelis-b4a9521a5/'
 
@@ -11,15 +12,6 @@ const VALUES = [
   ['spark', 'Engineering first', 'The AI is only as good as the systems under it, so we build both.'],
   ['flow', 'Honest scoping', "We tell you what's worth automating, and what isn't."],
   ['server', 'You own it', 'Documented, monitored and handed over, with no lock-in.'],
-]
-
-const COMPANY = [
-  ['Legal name', 'MIKA LABS ΜΟΝΟΠΡΟΣΩΠΗ Ι.Κ.Ε.'],
-  ['International name', 'MIKA LABS SINGLE MEMBER P.C.'],
-  ['Γ.Ε.ΜΗ. (Business registry)', '196695102000'],
-  ['Α.Φ.Μ. (VAT number)', '803427107'],
-  ['Δ.Ο.Υ. (Tax office)', 'ΚΕΦΟΔΕ Αττικής'],
-  ['Based in', 'Athens, Greece'],
 ]
 
 export default function About() {
@@ -97,23 +89,7 @@ export default function About() {
           </div>
         </section>
 
-        <section id="contact-us" className="contact wrap">
-          <div>
-            <span className="eyebrow">Work with us</span>
-            <h2>Let's talk about your processes.</h2>
-            <p>Book a 30-minute call and we'll look at where your team loses the most time.</p>
-            <div className="btnrow">
-              <BookButton label="Book a demo" className="btn" />
-              <a className="btn-outline" href={`mailto:${EMAIL}`}>Email us</a>
-            </div>
-            <BookingNote />
-          </div>
-          <div className="fields">
-            <div className="field"><span>Email</span><a href={`mailto:${EMAIL}`}>{EMAIL}</a></div>
-            <div className="field"><span>LinkedIn</span><a href={LINKEDIN} target="_blank" rel="noopener">alexandros-mikelis</a></div>
-            <div className="field"><span>Based in</span><b>Athens, Greece</b></div>
-          </div>
-        </section>
+        <CtaBand title="Let's talk about your processes." text="Book a 30-minute call and we'll look at where your team loses the most time." />
       </main>
 
       <Footer />

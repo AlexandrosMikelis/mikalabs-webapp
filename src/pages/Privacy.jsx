@@ -5,7 +5,7 @@ const Mail = () => <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
 export default function Privacy() {
   return (
     <>
-      <Hero short>
+      <Hero>
         <div className="herobody left">
           <span className="eyebrow">Privacy</span>
           <h1>Your data on this site.</h1>
