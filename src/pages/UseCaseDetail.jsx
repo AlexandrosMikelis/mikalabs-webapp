@@ -44,7 +44,7 @@ export default function UseCaseDetail() {
           <aside className="svc-fit">
             <span className="eyebrow">Built with</span>
             <p className="uc-links">
-              {u.services.map((k) => { const s = findService(k); return <Link key={k} to={`/services/${k}`}>{s.title}</Link> })}
+              {u.services.map(findService).filter(Boolean).map((s) => <Link key={s.slug} to={`/services/${s.slug}`}>{s.title}</Link>)}
               {agent && <Link to={`/agents/${agent.slug}`}>Try the free {agent.name} →</Link>}
             </p>
           </aside>
@@ -53,7 +53,7 @@ export default function UseCaseDetail() {
         <nav className="wrap more-links" aria-label="Related">
           <span>Other use cases:</span>
           {USE_CASES.filter((o) => o.slug !== u.slug).map((o) => <Link key={o.slug} to={`/use-cases/${o.slug}`}>{o.title}</Link>)}
-          <span className="sep" aria-hidden="true">·</span><Link to="/platform">The platform behind it</Link>
+          <span className="sep" aria-hidden="true">·</span><Link to="/services/ai-agents">How we build agents</Link>
         </nav>
 
         <CtaBand title={`Want this for your ${u.title.toLowerCase()}?`} text="We start by mapping how the process runs at your company today, then show you what an agent workflow would change." />

@@ -32,7 +32,7 @@ export default function About() {
       <Hero>
         <div className="herobody">
           <span className="member">Our mission</span>
-          <h1>AI &amp; automation that actually ships.</h1>
+          <h1>AI &amp; Automation that actually ships.</h1>
           <p>MIKA Labs is an Athens-based engineering company. We design, build and run AI agents, automated workflows and the systems underneath them.</p>
           <div className="ctas">
             <a className="btn" href="#team">Meet the team</a>

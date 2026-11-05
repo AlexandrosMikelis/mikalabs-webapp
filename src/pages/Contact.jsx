@@ -17,10 +17,10 @@ export default function Contact() {
       <main>
         <section className="wrap contact-cards contact-only">
           <article className="ccard">
-            <span className="eyebrow">Book a demo</span>
+            <span className="eyebrow">Book a call</span>
             <h2>30-minute video call</h2>
             <p>Pick a time that suits you. We'll look at one of your processes together.</p>
-            <BookButton label="Book a demo" className="btn" />
+            <BookButton label="Book a call" className="btn" />
             <BookingNote />
           </article>
           <article className="ccard">

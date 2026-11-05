@@ -13,7 +13,6 @@ import ServiceDetail from './pages/ServiceDetail.jsx'
 import Contact from './pages/Contact.jsx'
 import Terms from './pages/Terms.jsx'
 import { findService } from './data/services.js'
-import Platform from './pages/Platform.jsx'
 import UseCases from './pages/UseCases.jsx'
 import UseCaseDetail from './pages/UseCaseDetail.jsx'
 import Resources from './pages/Resources.jsx'
@@ -21,7 +20,7 @@ import GuideInstall from './pages/GuideInstall.jsx'
 import { findUseCase } from './data/useCases.js'
 
 const TITLES = {
-  '/': 'MIKA Labs — AI & automation',
+  '/': 'MIKA Labs — AI & Automation Consultancy',
   '/about': 'About — MIKA Labs',
   '/vision': 'Vision — MIKA Labs',
   '/services/ai-agents/store': 'Agent store — MIKA Labs',
@@ -29,7 +28,6 @@ const TITLES = {
   '/services': 'Services — MIKA Labs',
   '/contact': 'Contact — MIKA Labs',
   '/terms': 'Terms — MIKA Labs',
-  '/platform': 'Platform — MIKA Labs',
   '/use-cases': 'Use cases — MIKA Labs',
   '/resources': 'Resources — MIKA Labs',
   '/resources/install-an-agent': 'Install an agent in any AI tool — MIKA Labs',
@@ -72,7 +70,7 @@ export default function App() {
         <Route path="/services/:slug" element={<ServiceDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
-        <Route path="/platform" element={<Platform />} />
+        <Route path="/platform" element={<Navigate to="/services" replace />} />
         <Route path="/use-cases" element={<UseCases />} />
         <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
         <Route path="/resources" element={<Resources />} />

@@ -3,7 +3,7 @@ import { ICONS } from '../data/icons.js'
 
 // A live agent-graph diagram: work comes in on the left, a graph of connected agents handles it
 // (a task hops along the edges, each agent lights up as it works), and the result lands in your
-// systems on the right. Used in the Home hero, on /platform and on each use case, with its own labels.
+// systems on the right. Used in the Home hero, and on each use case, with its own labels.
 
 const ROWS = [70, 200, 330] // y of the three input and output cards
 const INPUTS = [['Email', ICONS.mail], ['Invoice', ICONS.doc], ['Form', ICONS.form]]

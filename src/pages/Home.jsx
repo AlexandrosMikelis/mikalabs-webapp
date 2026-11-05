@@ -1,13 +1,12 @@
 import { Hero, Footer } from '../components/Layout.jsx'
-import { Icon } from '../components/Icons.jsx'
 import { BookButton } from '../components/BookButton.jsx'
 import FlowDiagram from '../components/FlowDiagram.jsx'
 import { Link } from 'react-router-dom'
-import { SERVICES } from '../data/services.js'
+import ServiceTracks from '../components/ServiceTracks.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 
 const EXPLORE = [
-  ['/platform', 'Platform', 'A workflow system for agents', 'How agents, memory, tools and people fit together in one workflow.'],
+  ['/services/ai-agents/store', 'Agent store', 'Free agents for any LLM', 'Ready-made agents you can use today in ChatGPT, Gemini, Copilot, Claude or your own stack.'],
   ['/use-cases', 'Use cases', 'Agent workflows in practice', 'Invoice processing, document intake and AI compliance review, step by step.'],
   ['/vision', 'Vision', 'Map, build, automate, run', 'Why we treat automation as a loop, not a one-off project.'],
 ]
@@ -19,10 +18,10 @@ export default function Home() {
       <Hero>
         <div className="herobody split">
           <div>
-            <h1>AI &amp; automation, built around you.</h1>
-            <p>From AI agents to automated workflows and the systems underneath them, we design, build and run the technology that takes manual work off you and your team.</p>
+            <h1>AI &amp; Automation, built around you.</h1>
+            <p>We advise you on where AI pays off, what the EU AI Act asks of you and which technology to choose. Then, if you want, we design, build and run it with you.</p>
             <div className="ctas">
-              <BookButton label="Book a demo" className="btn" />
+              <BookButton label="Book a call" className="btn" />
               <a className="text" href="#services">Explore our services</a>
             </div>
           </div>
@@ -34,19 +33,10 @@ export default function Home() {
         <section id="services" className="build wrap">
           <div className="head">
             <span className="eyebrow">Services</span>
-            <h2>The AI and the infrastructure, from one team.</h2>
-            <p>Automation only works when the AI and the systems underneath it are built together. We do both. <Link to="/services">All services →</Link></p>
+            <h2>Advice first. Implementation when you're ready.</h2>
+            <p>Start with consulting, with no commitment to build. When it makes sense, the same team that gave the advice builds it. <Link to="/services">All services →</Link></p>
           </div>
-          <div className="caps">
-            {SERVICES.map((s) => (
-              <Link className="cap cap-link" key={s.slug} to={`/services/${s.slug}`}>
-                <Icon name={s.icon} />
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-                <span className="more">Learn more →</span>
-              </Link>
-            ))}
-          </div>
+          <ServiceTracks />
         </section>
 
         <section className="build wrap svc-steps">

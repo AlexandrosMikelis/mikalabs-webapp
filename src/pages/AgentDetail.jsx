@@ -3,7 +3,7 @@ import { PlainHeader, Footer, EMAIL } from '../components/Layout.jsx'
 import AgentIcon from '../components/AgentIcon.jsx'
 import { STORE_URL } from '../components/AgentStore.jsx'
 import Rich from '../components/Rich.jsx'
-import { findAgent, zipUrl, zipName } from '../data/agents.js'
+import { findAgent, TIER_LABEL, zipUrl, zipName } from '../data/agents.js'
 
 function DownloadIcon() {
   return <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M10 3v10M5.5 8.5L10 13l4.5-4.5M4 17h12" /></svg>
@@ -54,6 +54,7 @@ export default function AgentDetail() {
     ['Updated', agent.updated],
     ['Size', `${agent.size} · .zip`],
     ['Category', agent.category],
+    ...(agent.tier ? [['Level', <span className="tier-badge">{TIER_LABEL[agent.tier] || agent.tier}</span>]] : []),
     ['License', <Link to="/terms#agents">{agent.license}</Link>],
   ]
 

@@ -528,3 +528,31 @@ main:not(.wrap)>:last-child:not(.cta-band):not(.how){padding-bottom:var(--page-e
 .doc section:last-child{padding-bottom:0}
 main.privacy,main.store-page{padding-block:0 var(--page-end)}
 main.privacy:has(+.cta-band),main.store-page:has(+.cta-band){padding-bottom:var(--sec)}
+
+/* Service tracks: Advise / Build & run */
+.tracks{display:flex;flex-direction:column;gap:56px}
+.track-head{display:flex;flex-direction:column;gap:6px;max-width:640px;margin-bottom:24px;padding-top:20px;border-top:1px solid var(--line)}
+.track-label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.track-head h3{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.track-head p{font-size:16px}
+.links .dd-group{padding:10px 12px 4px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.links .dd-group:not(:first-child){margin-top:4px;border-top:1px solid var(--line)}
+
+/* Justified body text (headlines, captions, mono tags and centred blocks excluded) */
+.herobody.split p,.herobody.left p,main p:not(.mono):not(.uc-caption),.cta-band p{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+
+
+/* MLOps infinity infographic (Infrastructure & Operations page) */
+.inf-card{margin:24px 0 0;width:100%;align-self:stretch}
+.inf-card img{display:block;width:100%;max-width:860px;height:auto;margin:0 auto}
+
+
+/* Tighter top of inner-page heroes (navbar → breadcrumb → title) */
+.herobody.left{padding-top:28px}
+.herobody.left .crumbs{margin-bottom:8px}
+.herobody.left h1{margin-top:4px}
+@media (max-width:640px){.herobody.left{padding-top:20px}}
+
+/* Agent hierarchy level badge */
+.tier-badge{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--tint);border:1px solid var(--line);font:600 10px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);vertical-align:1px}
+.facts .tier-badge,dd .tier-badge{margin-left:0}

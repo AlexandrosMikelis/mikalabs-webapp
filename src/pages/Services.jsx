@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Hero, Footer } from '../components/Layout.jsx'
-import { Icon } from '../components/Icons.jsx'
 import CtaBand from '../components/CtaBand.jsx'
-import { SERVICES } from '../data/services.js'
+import ServiceTracks from '../components/ServiceTracks.jsx'
 import { STORE_URL } from '../components/AgentStore.jsx'
 
 export default function Services() {
@@ -11,24 +10,14 @@ export default function Services() {
       <Hero>
         <div className="herobody left">
           <span className="eyebrow">Services</span>
-          <h1>The AI and the infrastructure, from one team.</h1>
-          <p>Automation only works when the AI and the systems underneath it are built together. We do both, from the first process map to the system running in production.</p>
+          <h1>Consulting and implementation, from one team.</h1>
+          <p>We start as your advisors: where AI pays off, what the regulation requires, which technology to choose. When you're ready, we build and run it, from the first process map to the system in production.</p>
         </div>
       </Hero>
 
       <main>
         <section className="build wrap">
-          <div className="caps">
-            {SERVICES.map((s) => (
-              <Link className="cap cap-link" key={s.slug} to={`/services/${s.slug}`}>
-                <Icon name={s.icon} />
-                <h3>{s.title}</h3>
-                <p>{s.text}</p>
-                <p className="mono">{s.tags}</p>
-                <span className="more">Learn more →</span>
-              </Link>
-            ))}
-          </div>
+          <ServiceTracks showTags />
         </section>
 
         <nav className="wrap more-links" aria-label="Related">

@@ -1,4 +1,4 @@
-# Install the AI Ethics Advisor
+# Install Themis, the AI Ethics Advisor
 
 The advisor is plain Markdown: a set of instructions plus a knowledge base. It works with any capable LLM.
 

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AGENTS, zipUrl, zipName } from '../data/agents.js'
+import { AGENTS, TIER_LABEL, zipUrl, zipName } from '../data/agents.js'
 import AgentIcon from './AgentIcon.jsx'
 
 export const STORE_URL = '/services/ai-agents/store'
@@ -41,7 +41,7 @@ export default function AgentStore() {
               <Link to={`/agents/${a.slug}`} className="tile-link">
                 <AgentIcon agent={a} size={52} />
                 <div className="tile-text">
-                  <h3>{a.name}</h3>
+                  <h3>{a.name}{a.tier && <span className="tier-badge">{TIER_LABEL[a.tier] || a.tier}</span>}</h3>
                   <span className="tile-cat">{a.category}</span>
                   <p>{a.tagline}</p>
                 </div>

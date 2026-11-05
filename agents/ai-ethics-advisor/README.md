@@ -1,4 +1,4 @@
-# AI Ethics Advisor — by MIKA Labs
+# Themis — AI Ethics Advisor by MIKA Labs
 
 An advisor on the ethical side of AI, for people and for other AI agents. Works with any capable LLM: ChatGPT, Gemini, Copilot, Claude, Mistral, local models and any API or agent framework. Free to download and use.
 

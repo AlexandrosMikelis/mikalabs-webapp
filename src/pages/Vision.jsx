@@ -24,7 +24,6 @@ export default function Vision() {
             <nav className="more-links on-dark" aria-label="Related">
               <span>See it applied:</span>
               <Link to="/services">Services</Link>
-              <Link to="/platform">Platform</Link>
               <Link to="/use-cases">Use cases</Link>
             </nav>
           </div>

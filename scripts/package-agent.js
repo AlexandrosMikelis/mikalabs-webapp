@@ -8,14 +8,15 @@ import { execFileSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-const PREAMBLE = `<!-- Provider-neutral system prompt. Generated from SKILL.md. -->
-You have a knowledge base of reference files (references/01 … references/10). They may be attached as files, uploaded as knowledge, or included below this prompt. When these instructions say "read references/NN-…", consult that reference.
+const preamble = (n) => `<!-- Provider-neutral system prompt. Generated from SKILL.md. -->
+You have a knowledge base of reference files (references/01 … references/${String(n).padStart(2, '0')}). They may be attached as files, uploaded as knowledge, or included below this prompt. When these instructions say "read references/NN-…", consult that reference.
 
 `
 
 export function systemPrompt(src) {
   const skill = readFileSync(join(src, 'SKILL.md'), 'utf8').replace(/^---[\s\S]*?---\s*/, '')
-  return PREAMBLE + skill
+  const n = readdirSync(join(src, 'references')).filter((f) => f.endsWith('.md')).length
+  return preamble(n) + skill
 }
 
 export function allInOne(src) {
