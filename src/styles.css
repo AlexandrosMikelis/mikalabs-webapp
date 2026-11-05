@@ -556,3 +556,6 @@ main.privacy:has(+.cta-band),main.store-page:has(+.cta-band){padding-bottom:var(
 /* Agent hierarchy level badge */
 .tier-badge{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--tint);border:1px solid var(--line);font:600 10px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);vertical-align:1px}
 .facts .tier-badge,dd .tier-badge{margin-left:0}
+
+/* Designed agent icons (light tile): softer shadow than the gradient tiles */
+.agent-icon-img{box-shadow:0 0 0 1px rgba(79,70,229,.10),0 6px 14px -10px rgba(79,70,229,.45)}

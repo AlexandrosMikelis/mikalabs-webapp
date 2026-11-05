@@ -49,7 +49,16 @@ const GLYPHS = {
   ),
 }
 
+// Designed icons in src/assets/agent-icons/, named after the agent (themis.svg, hermes.svg, …).
+// When an agent has one it is used; otherwise the gradient tile with a glyph below is the fallback.
+const FILES = import.meta.glob('../assets/agent-icons/*.svg', { eager: true, import: 'default' })
+const iconFor = (agent) => FILES[`../assets/agent-icons/${agent.name.toLowerCase()}.svg`]
+
 export default function AgentIcon({ agent, size = 56 }) {
+  const src = iconFor(agent)
+  if (src) {
+    return <img className="agent-icon agent-icon-img" src={src} width={size} height={size} alt="" aria-hidden="true" style={{ borderRadius: size * 0.22 }} />
+  }
   return (
     <span className="agent-icon" style={{ width: size, height: size, background: agent.cover, borderRadius: size * 0.26 }} aria-hidden="true">
       <svg width={size * 0.56} height={size * 0.56} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
