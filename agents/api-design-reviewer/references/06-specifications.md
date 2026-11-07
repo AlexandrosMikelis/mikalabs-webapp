@@ -8,14 +8,14 @@ Once there is more than one consumer, they need a precise, shareable description
 - **AsyncAPI**: the counterpart for event-driven and message-based APIs (channels, messages, bindings for Kafka, AMQP, MQTT, WebSockets). Younger standard; the variety of protocols makes tooling uneven.
 - **Protocol Buffers (.proto)**: the schema for gRPC; stricter than OpenAPI because it defines the wire layout.
 - **GraphQL SDL**: the schema for GraphQL APIs.
-- JSON Schema for payloads; Arazzo (general knowledge) for multi-step workflows across operations.
+- JSON Schema for payloads; Arazzo for multi-step workflows across operations.
 
 ## Practical uses of a spec
 - **Code generation**: client SDKs and server stubs in many languages (e.g., OpenAPI Generator). Fast integration; review the generated code's quality and pin generator versions.
 - **Validation**: check real requests and responses against the spec, in tests (so the implementation can't drift from the contract) and at runtime, e.g., at a gateway or in a DMZ, dropping traffic that doesn't conform. Runtime validation makes the forgiving OpenAPI model stricter.
 - **Examples and mocks**: examples document expected behaviour; mock servers built from them let consumers try the API before it exists. Trying an API is often more useful than reading a spec. Validate the examples against the schema (examples are free text and drift).
 - **Change detection**: diff against the previous release in the pipeline (see 05).
-- **Linting** (general knowledge): enforce the organisation's style guide automatically (e.g., Spectral rulesets, Redocly lint, buf lint).
+- **Linting**: enforce the organisation's style guide automatically (e.g., Spectral rulesets, Redocly lint, buf lint).
 
 ## A spec is not the whole contract
 OpenAPI describes **shape**, not full **semantics**: it doesn't say what happens on a retry, which state transitions are allowed or what a 500 means for state. Capture behaviour in descriptions, examples and, above all, contract tests (07). If the API is public, model and test the range of behaviours before launch, so you don't have to change it drastically afterwards.
@@ -38,13 +38,9 @@ OpenAPI describes **shape**, not full **semantics**: it doesn't say what happens
 - Pagination, filtering and error conventions consistent (03, 04).
 - Deprecated operations/fields marked `deprecated: true` with a replacement noted.
 
-## Choosing an API standard (decision guide)
-Questions:
-- Does the organisation already have a standard? Can it extend to external consumers?
-- Do we expose third-party APIs (e.g., identity) that bring their own conventions?
-- What does the lack of a standard cost our consumers?
-Recommendations:
-- Pick a published guideline that matches the culture and existing inventory: **Microsoft REST API Guidelines**, **Google AIP** (aip.dev), **Zalando RESTful API Guidelines**, or similar. They use RFC 2119 wording (MUST, SHOULD, MAY), so teams know what is mandatory.
-- Extend it with domain-specific rules and a data dictionary.
-- Adopt it **early**: retrofitting consistency later means breaking changes.
-- Be critical of existing APIs: would a new consumer understand them?
+## Which style guide should the organisation follow?
+- **Default**: adopt one public guide rather than writing your own from scratch: Zalando RESTful API Guidelines, Google AIP (aip.dev) or the Microsoft/Azure REST API guidelines. All three use RFC 2119 / RFC 8174 keywords (MUST, SHOULD, MAY), so teams can tell rules from advice.
+- **Switch if**: most existing APIs already follow one house convention (keep it and write it down), or a dominant third-party platform you integrate with imposes its own (follow it at that boundary only).
+- **Then**: add a short house supplement (domain data dictionary, ID format, error `type` URIs, pagination choice) and enforce the machine-checkable parts with a linter ruleset such as Spectral in CI.
+- **Timing**: decide before the second public API ships; consistency added later means breaking changes.
+- Community energy co-op example: three APIs, two naming styles. Decision: Zalando guidelines plus a one-page supplement; a Spectral ruleset flags snake_case in new specs; existing APIs converge at their next major.

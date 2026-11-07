@@ -22,7 +22,7 @@ export default function Services() {
 
         <nav className="wrap more-links" aria-label="Related">
           <span>How we work:</span><Link to="/vision">Map → Build → Automate → Run</Link>
-          <span className="sep" aria-hidden="true">·</span><Link to={STORE_URL}>Free agent store</Link>
+          <span className="sep" aria-hidden="true">·</span><Link to={STORE_URL}>Free Agent Store</Link>
         </nav>
 
         <CtaBand />

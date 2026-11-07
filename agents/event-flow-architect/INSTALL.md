@@ -5,7 +5,7 @@ The agent is plain Markdown: a set of instructions plus a knowledge base. It wor
 | File | Use it for |
 |---|---|
 | `system-prompt.md` | The instructions. Paste into the "instructions" / "system prompt" field of any tool (under 8,000 characters). |
-| `references/` (10 files) | The knowledge base. Upload as knowledge / files where the tool allows it. |
+| `references/` (11 files) | The knowledge base. Upload as knowledge / files where the tool allows it. |
 | `event-flow-architect-all-in-one.md` | Instructions + all references in one file, for tools that take a single file or a single long prompt. |
 | `SKILL.md` | Claude skill format (same content as `system-prompt.md`, with skill metadata). |
 | `agent/event-flow-architect.md` | Claude Code subagent definition. |
@@ -13,7 +13,7 @@ The agent is plain Markdown: a set of instructions plus a knowledge base. It wor
 ## ChatGPT (Custom GPT)
 1. Explore GPTs → Create → Configure.
 2. **Instructions**: paste `system-prompt.md`.
-3. **Knowledge**: upload the 10 files in `references/`.
+3. **Knowledge**: upload the 11 files in `references/`.
 4. Turn off web browsing if you want answers grounded only in the references.
 
 ## Google Gemini (Gem)
@@ -41,7 +41,7 @@ Use `system-prompt.md` as the system prompt and attach the references as a knowl
 Simplest: send `event-flow-architect-all-in-one.md` as the system message (about 18k tokens).
 Leaner: send `system-prompt.md` as the system message and retrieve the relevant `references/` files with your RAG or file-search tool.
 
-Callers can add optional first-line headers:
+Callers can add optional header lines at the top of the request:
 ```
 MODE: assess | design | review | ask
 FORMAT: full | structured

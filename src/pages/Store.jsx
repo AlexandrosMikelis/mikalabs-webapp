@@ -8,8 +8,8 @@ export default function Store() {
     <>
       <Hero>
         <div className="herobody left store-hero">
-          <nav className="crumbs" aria-label="Breadcrumb"><Link to="/services">Services</Link> / <Link to="/services/ai-agents">AI agents</Link> / Agent store</nav>
-          <h1>Agent store</h1>
+          <nav className="crumbs" aria-label="Breadcrumb"><Link to="/services">Services</Link> / <Link to="/services/ai-agents">AI agents</Link> / Agent Store</nav>
+          <h1>Agent Store</h1>
           <p>Ready-made AI agents, free. Download one and load it into ChatGPT, Gemini, Copilot, Claude or any LLM, and it works on your behalf.</p>
         </div>
       </Hero>

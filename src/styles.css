@@ -370,6 +370,9 @@ footer a{color:var(--soft);text-decoration:underline}
 .search input{border:0;outline:0;font:15px Inter,sans-serif;padding:10px 0;width:100%;color:var(--navy);background:transparent}
 .store-count{margin:24px 0 12px;font-size:14px;color:var(--soft)}
 .empty{padding:48px 0;color:var(--soft)}
+.store-group+.store-group{margin-top:36px}
+.store-group-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;font-size:18px;font-weight:600;color:var(--navy);margin:8px 0 14px}
+.store-group-head span{font-size:14px;font-weight:400;color:var(--soft)}
 
 /* compact app tiles */
 .tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}

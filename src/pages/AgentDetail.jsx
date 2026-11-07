@@ -63,7 +63,7 @@ export default function AgentDetail() {
       <PlainHeader />
 
       <main className="listing wrap">
-        <div className="crumbs"><Link to="/services/ai-agents">AI agents</Link><span aria-hidden="true">/</span><Link to={STORE_URL}>Agent store</Link><span aria-hidden="true">/</span><span>{agent.name}</span></div>
+        <div className="crumbs"><Link to="/services/ai-agents">AI agents</Link><span aria-hidden="true">/</span><Link to={STORE_URL}>Agent Store</Link><span aria-hidden="true">/</span><span>{agent.name}</span></div>
 
         <div className="listing-grid">
           <aside className="side">

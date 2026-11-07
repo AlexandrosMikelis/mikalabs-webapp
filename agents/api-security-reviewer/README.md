@@ -5,14 +5,14 @@ A reviewer for the security of APIs, for people and for other AI agents. Named a
 **Tier: worker.** Argus does one specialist job — API security analysis — and returns results that people can act on and orchestrator agents can parse. It reviews designs and configurations; it never attacks anything.
 
 ## What it does
-- **Threat-models** an API design or architecture: data-flow model with trust boundaries, threats per element (STRIDE), mapped to the OWASP API Security Top 10 (2023), rated Critical/High/Medium/Low, each with a concrete fix and where it belongs (client, gateway, service, identity provider, mesh).
-- **Reviews** an existing auth setup, OpenAPI spec, gateway or mesh configuration: OAuth 2.x grants and PKCE, OIDC and ID-token misuse, JWT validation, scopes and claims, mTLS and service identity, API keys, rate limiting, CORS, header hygiene, secrets and audit logging. Ends with a verdict: Approve / Approve with conditions / Rework / Block.
-- **Answers** API security questions: "Do we still need PKCE for a confidential client?", "Is an API key enough for a partner integration?", "Where should object-level authorisation live?"
+- **Threat-models** an API design or architecture: data classes (D0–D4) and trust boundaries, threats per boundary crossing (STRIDE, plus LINDDUN for personal data), cross-checked against the 2023 OWASP list of API risks, scored with a transparent Critical/High/Medium/Low rule, each with a concrete fix and the component that should own it.
+- **Reviews** an existing sign-in and permission setup, OpenAPI document, gateway or platform configuration: which OAuth flows are used and how, token validation, scopes and claims, workload identity, API keys, consumption limits, browser-facing settings, secrets and audit records. Ends with a verdict: Approve / Approve with conditions / Rework / Block.
+- **Answers** API security questions: "Do server-side apps need PKCE too?", "Is an API key enough for a partner integration?", "Where should object-level authorisation live?"
 
 ## How to use it
-**As a person**: describe the design, paste the spec or config, or ask the question. Examples:
-- "Threat-model: public SPA and mobile app calling our orders API through Kong; Auth0 as IdP; partners pull order data nightly."
-- "Review this OpenAPI spec and gateway config: [paste]"
+**As a person**: describe the design, paste the contract or config, or ask the question. Examples:
+- "Threat-model: owner app and clinic portal calling our pet-records API through a gateway; hosted OIDC provider; partner labs push results nightly."
+- "Review this OpenAPI document and gateway config: [paste]"
 - "Our partner sends an API key plus an `X-User-Id` header. Is that OK?"
 - "How long should access tokens live, and do we need refresh-token rotation?"
 
@@ -21,32 +21,32 @@ A reviewer for the security of APIs, for people and for other AI agents. Named a
 MODE: review
 FORMAT: structured
 CONTEXT: fintech, EU, public API, third-party consumers
-<spec, config or design description>
+<contract, config or design description>
 ```
 With `FORMAT: structured`, threat models and reviews come back as JSON. It never waits for answers: it states its assumptions and lists the open questions that would change a rating.
 
 **Defensive only**: no exploit code, attack payloads or attack walkthroughs, and no testing of systems you don't own.
 
 ## What it's built on
-Informed by *Mastering API Architecture* (James Gough, Daniel Bryant, Matthew Auburn; O'Reilly, 2022) for threat modelling, gateway, service-mesh and OAuth/OIDC foundations, updated with current published standards: OWASP API Security Top 10 (2023); STRIDE and DREAD; CVSS; IETF OAuth 2.0 (RFC 6749), PKCE (RFC 7636), OAuth 2.0 Security Best Current Practice (RFC 9700) and the OAuth 2.1 draft; Device Grant (RFC 8628); Token Exchange (RFC 8693); mTLS-bound tokens (RFC 8705); DPoP (RFC 9449); PAR (RFC 9126); JWT (RFC 7519), JWT BCP (RFC 8725) and JWT access-token profile (RFC 9068); OpenID Connect Core and FAPI 2.0; NIST SP 800-207 Zero Trust Architecture; SPIFFE.
+Open standards and widely used industry practice: the OWASP 2023 list of API risks, OWASP ASVS 5.0 and the OWASP cheat sheets; STRIDE and LINDDUN; CWE, CAPEC and CVSS v4.0; the IETF OAuth family (RFC 6749, the Security Best Current Practice RFC 9700, RFC 7636, 8628, 8693, 7662, 8705, 9449, 9126, 9396, 9470); the JWT family (RFC 7519, 8725, 9068); OpenID Connect Core and the FAPI 2.0 Security Profile; RFC 9457 problem details; NIST SP 800-207 and SP 800-207A; SPIFFE/SPIRE. On top of these, MIKA's own review structure: data classes with control baselines, an exposure sheet, a credential ladder, an authorisation trace, a control placement matrix and the Argus severity score.
 
 ## Limits
 - **Not a penetration test.** It reviews what you describe or paste; it doesn't scan, probe or verify running systems.
 - **Not legal or compliance advice.** Points on GDPR, PCI DSS, PSD2 and similar are flags to confirm with your compliance team.
-- Standards were checked on 1 Nov 2026; OAuth 2.1 is still being finalised, so re-verify for decisions that depend on it.
+- Standards were checked on 7 Nov 2026; OAuth 2.1 is still an IETF draft, so re-verify for decisions that depend on it.
 - A vague description gets a review full of assumptions; give it consumers, exposure, data classes, identity provider and grants.
 - Provided as is, without warranty. You are responsible for the decisions you make with it.
 
 ## Install
 See **`INSTALL.md`** for step-by-step setup in ChatGPT, Gemini, Copilot, Claude, Mistral, local models and APIs. In short:
 - **Instructions**: `system-prompt.md` (paste into any tool's instructions / system prompt field).
-- **Knowledge**: the 10 files in `references/` (upload as knowledge files).
+- **Knowledge**: the 11 files in `references/` (upload as knowledge files).
 - **One file only?** Use `api-security-reviewer-all-in-one.md`.
 
 ## Maintenance
-Re-check `references/03-owasp-api-top-10.md` and `references/05-oauth-and-oidc.md` when OWASP publishes a new API Top 10 or OAuth 2.1 is published as an RFC.
+Re-check `references/03-boundaries-and-threat-discovery.md`, `references/05-delegated-access-flows.md` and `references/07-token-handling.md` when OWASP publishes a new API Top 10 or ASVS, when OAuth 2.1 is published as an RFC, or when the OpenID Foundation revises FAPI 2.0.
 
 ---
 MIKA Labs · mikalaboratories.com · info@mikalaboratories.com
 
-Independent work: written by MIKA Labs in its own words. MIKA Labs is not affiliated with, sponsored or endorsed by the authors or publishers of the works named above; titles and names are used only to credit the ideas.
+Independent work, written by MIKA Labs in its own words.

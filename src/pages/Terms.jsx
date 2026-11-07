@@ -33,7 +33,7 @@ export default function Terms() {
           <section id="agents">
             <h2>Downloadable agents</h2>
             <ul>
-              <li><b>Free to use.</b> You may download, use and adapt the agents in our <Link to="/services/ai-agents/store">agent store</Link> for personal and business use, free of charge.</li>
+              <li><b>Free to use.</b> You may download, use and adapt the agents in our <Link to="/services/ai-agents/store">Agent Store</Link> for personal and business use, free of charge.</li>
               <li><b>Attribution.</b> If you share an agent or a modified version with others, keep the credit to MIKA Labs in its README.</li>
               <li><b>As is.</b> The agents are provided without warranty of any kind. Their output is produced by the AI model you run them on and can be wrong or incomplete.</li>
               <li><b>Not professional advice.</b> An agent's output is not legal, compliance, financial or other professional advice. Check important results with a qualified person before acting on them.</li>

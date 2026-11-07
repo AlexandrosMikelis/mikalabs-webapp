@@ -5,7 +5,7 @@ The reviewer is plain Markdown: a set of instructions plus a knowledge base. It 
 | File | Use it for |
 |---|---|
 | `system-prompt.md` | The instructions. Paste into the "instructions" / "system prompt" field of any tool (under 8,000 characters). |
-| `references/` (10 files) | The knowledge base. Upload as knowledge / files where the tool allows it. |
+| `references/` (12 files) | The knowledge base. Upload as knowledge / files where the tool allows it. |
 | `api-design-reviewer-all-in-one.md` | Instructions + all references in one file, for tools that take a single file or a single long prompt. |
 | `SKILL.md` | Claude skill format (same content as `system-prompt.md`, with skill metadata). |
 | `agent/api-design-reviewer.md` | Claude Code subagent definition (worker tier). |
@@ -13,7 +13,7 @@ The reviewer is plain Markdown: a set of instructions plus a knowledge base. It 
 ## ChatGPT (Custom GPT)
 1. Explore GPTs → Create → Configure.
 2. **Instructions**: paste `system-prompt.md`.
-3. **Knowledge**: upload the 10 files in `references/`.
+3. **Knowledge**: upload the 12 files in `references/`.
 4. Turn off web browsing if you want answers grounded only in the references.
 
 ## Google Gemini (Gem)
@@ -38,7 +38,7 @@ Paste `system-prompt.md` as the instructions and upload `references/` (or the al
 Use `system-prompt.md` as the system prompt and attach the references as a knowledge collection, or use `api-design-reviewer-all-in-one.md` as the system prompt if your model has a context window of 32k tokens or more (leave room for the spec you paste). Smaller models will follow the review format less reliably.
 
 ## APIs and agent frameworks (OpenAI, Anthropic, Google, Azure, AWS Bedrock, LangChain, LlamaIndex, CrewAI, n8n …)
-Simplest: send `api-design-reviewer-all-in-one.md` as the system message (about 15k tokens).
+Simplest: send `api-design-reviewer-all-in-one.md` as the system message (about 18k tokens).
 Leaner: send `system-prompt.md` as the system message and retrieve the relevant `references/` files with your RAG or file-search tool.
 
 Callers can add optional first-line headers:

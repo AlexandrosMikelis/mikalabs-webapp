@@ -49,7 +49,7 @@ export default function ServiceDetail() {
         {s.slug === 'ai-agents' && (
           <section className="wrap promo-sec">
             <Link className="store-promo" to={STORE_URL}>
-              <span><b>Agent store</b><small>Ready-made agents, free, for ChatGPT, Gemini, Copilot, Claude or any LLM.</small></span>
+              <span><b>Agent Store</b><small>Ready-made agents, free, for ChatGPT, Gemini, Copilot, Claude or any LLM.</small></span>
               <span className="more">Browse the store →</span>
             </Link>
           </section>

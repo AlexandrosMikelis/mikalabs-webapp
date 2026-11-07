@@ -1,20 +1,23 @@
 # Versioning and compatibility
 
-## Why APIs are different from libraries
-A library change waits until the consumer recompiles. An API is a running service: a change is live for every consumer the moment it deploys. With several consumers, every change is a coordination question. Not planning versioning for an API that others consume is dangerous; versioning should be a deliberate product decision, with a defined way of telling consumers about it.
+## Who feels a change, and when?
+A deployed API change reaches every caller at once; nobody gets to "upgrade later" unless you give them a way to. So the first review question is not "what version number?" but "who has to do something, and by when?". An API that others call needs a written change policy (how changes are classified, announced and retired) before its first release.
 
-## The three upgrade options (use all three, under rules)
-1. **New version at a new location** (e.g., `/v2`) — old consumers carry on; the producer must run, patch and secure several versions in parallel.
-2. **Backward-compatible release** — additive changes only; no consumer action needed. Even a "small fix" such as correcting a misspelt field name breaks compatibility.
-3. **Breaking release that all consumers must adopt** — sometimes unavoidable (security, legal), but forces lockstep, coordinated change. Last resort.
+## MIKA change-path table
+| Path | Caller effort | Server cost | Use when |
+|---|---|---|---|
+| **Additive release** (new optional fields, new operations) | None, provided callers tolerate additions | Low | The default for almost every change. Note that even fixing a misspelt field name is not additive |
+| **Parallel major** (`/v2` or a new version header value) | Each caller migrates on its own schedule | Two versions to run, patch and secure until the old one retires | A breaking change is genuinely needed and callers cannot all move together |
+| **Forced cut-over** (everyone must move by a date) | All callers change in lockstep | Low afterwards, high coordination before | Only for security or legal emergencies, with direct contact to every caller |
+Veterinary clinic example: adding `species` to appointment responses is additive; changing `appointmentTime` from local time to UTC changes meaning, so it needs a parallel major or a new field (`appointmentTimeUtc`) beside the old one.
 
-## Semantic versioning applied to APIs
-- **MAJOR**: incompatible change. Adopting it is an active decision by the consumer; provide a migration guide and track who has moved.
-- **MINOR**: backward-compatible addition; consumers can receive it without changing code.
-- **PATCH**: bug fixes with no contract change.
-- Expose only the major version to consumers in the URL or header; record minor/patch in the spec's `info.version` and changelog.
+## Version numbers (Semantic Versioning 2.0.0, applied to contracts)
+- **Major**: incompatible. Callers opt in, so publish a migration guide and track per caller who has moved.
+- **Minor**: compatible addition; callers get it without code changes.
+- **Patch**: fixes with no contract change.
+- Callers see only the major (in the path or a header); minor and patch live in the spec's `info.version` and the changelog.
 
-## Where to put the version (general knowledge)
+## Where to put the version
 - **URL path** (`/v1/...`): explicit, cache- and gateway-friendly, easy to route; most common for public APIs.
 - **Header** (`Api-Version: 2026-11-01`) or **media type** (`application/vnd.acme.v2+json`): cleaner URLs, harder to test in a browser.
 - **Date-based versions** (Stripe, Azure): good for frequent, small breaking changes with per-account pinning.
@@ -33,7 +36,10 @@ A library change waits until the consumer recompiles. An API is a running servic
 **JSON/REST — usually compatible**
 - Add an optional request field or query parameter; add a response field; add an operation or resource; relax validation.
 - Add an enum value to a **response** — compatible only if consumers were told enums are extensible and to handle unknown values. Otherwise treat as breaking.
-- **Robustness principle** (Postel's law; general knowledge): consumers should ignore unknown fields and tolerate additions; producers should be strict in what they send. Write this into the API's consumer guidance; it is what makes additive change safe.
+- **Robustness principle** (Postel's law): consumers should ignore unknown fields and tolerate additions; producers should be strict in what they send. Write this into the API's consumer guidance; it is what makes additive change safe.
+
+A quick test for any proposed change is the compatibility checklist in 10 (fields, meaning, enums, links, status codes). If a change fails it and is truly needed, run old and new side by side, move callers across, then retire the old one.
+- Data model changes behind a live API follow the same pattern: expand (add the new field or table, write both), migrate readers, then contract (stop writing the old one) only after no consumer reads it. Keep a release reversible: rolling back code must not lose data written by the new version.
 
 **Protobuf / gRPC** (binary layout is defined by field numbers, so the rules are stricter than JSON)
 - Breaking: change a field number; change a field's type (in most cases); remove a field and reuse its number or name; rename a service or method or package; change a method's request/response type; change streaming mode.
@@ -41,11 +47,11 @@ A library change waits until the consumer recompiles. An API is a running servic
 - Renaming a field is wire-compatible but breaks generated code and JSON transcoding; treat as breaking for consumers.
 - Never generate field numbers automatically (e.g., alphabetically from another spec).
 
-**GraphQL** (general knowledge): adding types/fields is compatible; removing or renaming fields, making arguments required, or changing a field's type is breaking. Evolve with `@deprecated(reason:)` and usage monitoring instead of versions.
+**GraphQL**: adding types/fields is compatible; removing or renaming fields, making arguments required, or changing a field's type is breaking. Evolve with `@deprecated(reason:)` and usage monitoring instead of versions.
 
-**Events / AsyncAPI** (general knowledge): consumers you may not know about read old and new messages, often replaying history. Use a schema registry with a compatibility mode (backward, forward, full); add optional fields only; publish a new event type or topic for incompatible changes.
+**Events / AsyncAPI**: consumers you may not know about read old and new messages, often replaying history. Use a schema registry with a compatibility mode (backward, forward, full); add optional fields only; publish a new event type or topic for incompatible changes.
 
-## Deprecation and sunset (general knowledge)
+## Deprecation and sunset
 - Announce, document and date it: `Deprecation` header (RFC 9745) and `Sunset` header (RFC 8594), changelog, direct notice to known consumers.
 - Measure usage per consumer before removal; give a migration window proportional to consumer count and type (months for public APIs).
 - Run old and new versions side by side; route via the gateway.

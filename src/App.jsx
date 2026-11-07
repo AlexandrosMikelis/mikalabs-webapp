@@ -23,7 +23,7 @@ const TITLES = {
   '/': 'MIKA Labs — AI & Automation Consultancy',
   '/about': 'About — MIKA Labs',
   '/vision': 'Vision — MIKA Labs',
-  '/services/ai-agents/store': 'Agent store — MIKA Labs',
+  '/services/ai-agents/store': 'Agent Store — MIKA Labs',
   '/privacy': 'Privacy — MIKA Labs',
   '/services': 'Services — MIKA Labs',
   '/contact': 'Contact — MIKA Labs',

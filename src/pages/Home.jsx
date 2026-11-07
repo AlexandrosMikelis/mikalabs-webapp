@@ -6,7 +6,7 @@ import ServiceTracks from '../components/ServiceTracks.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 
 const EXPLORE = [
-  ['/services/ai-agents/store', 'Agent store', 'Free agents for any LLM', 'Ready-made agents you can use today in ChatGPT, Gemini, Copilot, Claude or your own stack.'],
+  ['/services/ai-agents/store', 'Agent Store', 'Free agents for any LLM', 'Ready-made agents you can use today in ChatGPT, Gemini, Copilot, Claude or your own stack.'],
   ['/use-cases', 'Use cases', 'Agent workflows in practice', 'Invoice processing, document intake and AI compliance review, step by step.'],
   ['/vision', 'Vision', 'Map, build, automate, run', 'Why we treat automation as a loop, not a one-off project.'],
 ]

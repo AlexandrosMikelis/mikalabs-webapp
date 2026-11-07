@@ -1,61 +1,59 @@
-# Standards and technology evaluation
+# 08 · Standards and technology classes
 
-Checked against public specifications on 1 Nov 2026 (general knowledge beyond the flow literature unless noted). Products are examples of technology classes, not recommendations; verify versions and support before deciding. Vendor surveys from 2021 are dated — use the criteria, not the lists.
+Checked against public specifications and project documentation in November 2026 (2026-11). Products are examples of technology classes, not recommendations. Versions, features and pricing change; verify before deciding.
 
-## CloudEvents 1.0 (CNCF, graduated)
-A common **envelope** for event metadata, independent of transport. Strongest candidate for the flow metadata layer.
-- **Required attributes**: `id` (unique within the source), `source` (URI-reference identifying the context that produced it), `specversion` ("1.0"), `type` (reverse-DNS style, e.g. `com.acme.shipment.delayed.v1`).
-- **Optional**: `datacontenttype`, `dataschema`, `subject` (the thing the event is about, within the source), `time` (RFC 3339). Plus `data` (the payload).
-- **Extensions** (custom attributes, lower-case alphanumerics); documented ones include distributed tracing, partitioning (`partitionkey`), sequence, dataref (claim-check reference), authcontext.
-- **Modes**: *binary* (attributes in transport headers, payload as body — efficient, payload untouched) and *structured* (whole event as one document, e.g. `application/cloudevents+json`); *batch* in some bindings.
-- **Bindings** for HTTP, Kafka, AMQP, MQTT, NATS, WebSockets and others; formats JSON, Avro, Protobuf, XML.
-- Dedupe key: `source` + `id`. Encryption of payloads is left to the user.
-- Related CNCF work: subscriptions and discovery APIs and **xRegistry** (registry of endpoints, message definitions and schemas) — still maturing; check status before relying on them.
+## Which open standards matter, and where do they sit?
+| Concern | Standard | Steward | Status at check | Notes |
+|---|---|---|---|---|
+| Event envelope | **CloudEvents 1.0** (patch 1.0.2) | CNCF (graduated Jan 2024) | Stable | Protocol bindings and event formats listed in `07` |
+| Channel contract | **AsyncAPI 3.x** | AsyncAPI Initiative (Linux Foundation) | 3.0 released Dec 2023 | Channels, operations, bindings (`07`) |
+| Registry / discovery | **xRegistry** | CNCF (from CloudEvents work) | Maturing — check | Endpoints, message definitions, schema registries |
+| Device and edge pub/sub | **MQTT 5.0** (also 3.1.1) | OASIS; 3.1.1 also ISO/IEC 20922 | Stable | QoS 0/1/2, retained messages, shared subscriptions, message expiry, user properties, request/response via response topic and correlation data, reason codes |
+| Enterprise messaging wire protocol | **AMQP 1.0** | OASIS; ISO/IEC 19464 | Stable | Immutable bare message, rich delivery states, link credit flow control |
+| HTTP semantics | RFC 9110; HTTP/2 RFC 9113; HTTP/3 RFC 9114 over QUIC (RFC 9000) | IETF | Stable | HTTP/3 avoids transport-level head-of-line blocking across streams |
+| Webhooks | **Standard Webhooks** specification | Open community spec | Stable conventions | `webhook-id`, `webhook-timestamp`, `webhook-signature` headers; symmetric (HMAC-SHA256) or asymmetric (Ed25519) signatures |
+| Message signing over HTTP | RFC 9421 HTTP Message Signatures | IETF (Feb 2024) | Stable | General-purpose alternative to bespoke signature headers |
+| Trace propagation | **W3C Trace Context** | W3C Recommendation | Stable | `traceparent`/`tracestate`; CloudEvents tracing extension carries them in events |
+| Telemetry naming | **OpenTelemetry messaging semantic conventions** | CNCF OpenTelemetry | Check stability level | Span and metric attributes such as `messaging.system`, `messaging.destination.name` |
+| Server push to browsers | WebSocket (RFC 6455); Server-Sent Events (WHATWG HTML) | IETF / WHATWG | Stable | Long-lived connections; need resume logic |
 
-## AsyncAPI 3.0
-Machine-readable **contract** for event-driven APIs, the async counterpart to OpenAPI.
-- Core objects: `info`, `servers` (brokers/endpoints + protocol), `channels` (addresses/topics with their messages), `operations` (`send` or `receive` on a channel, from the application's point of view), `components` (reusable messages, schemas, security schemes), protocol **bindings** (Kafka, AMQP, MQTT, WebSockets, HTTP, …).
-- 3.0 separates channels from operations and supports request/reply. Payload schemas can be JSON Schema, Avro, etc. CloudEvents can be described as message headers/traits.
-- Use it to publish partner-facing streams, generate docs and code, and validate in CI.
-
-## Transport and messaging protocols
-| Protocol | Character | Use when |
+## Protocols at a glance
+| Protocol | Character | Reach for it when |
 |---|---|---|
-| **MQTT** (OASIS; 3.1.1 and 5.0) | Lightweight pub/sub via broker; topics; QoS 0/1/2; retained messages; v5 adds user properties, shared subscriptions, expiry | Devices, constrained networks, many publishers |
-| **AMQP 1.0** (OASIS/ISO) | Wire-level messaging; immutable message body; rich delivery states | Enterprise messaging, cross-vendor brokers |
-| **HTTP** + **webhooks** | Request–response; push via consumer callback URIs | Low-friction partner push; firewall-friendly. Sign deliveries; retry with backoff; consider the Standard Webhooks spec conventions |
-| **WebSocket** / **Server-Sent Events** | Long-lived connection; WebSocket two-way, SSE server → client | Browsers, live UIs, simple streaming to partners |
-| **gRPC streaming** | HTTP/2 bidirectional streams with Protobuf | Internal service-to-service streams |
-| **Kafka protocol** | De-facto log protocol, many compatible implementations | Ordered, replayable streams; internal backbone |
-| **NATS** | Subject-based pub/sub, JetStream persistence | Lightweight, multi-cloud/edge meshes |
-HTTP/3 over QUIC reduces head-of-line blocking for multiplexed streams.
+| HTTP webhooks | Push to consumer callback URLs | B2 partners, modest volume, firewall-friendly delivery |
+| MQTT 5 | Lightweight broker pub/sub, small headers | Meters, batteries, vehicles, constrained networks |
+| AMQP 1.0 | Interoperable broker messaging with delivery states | Enterprise queues, cross-vendor brokers |
+| Kafka protocol | Partitioned, replayable log; many compatible implementations | Ordered streams, replay, high fan-out inside an organisation |
+| NATS (with JetStream) | Subject-based pub/sub; optional persistence | Lightweight multi-site and edge meshes |
+| gRPC streaming | HTTP/2 bidirectional streams, Protobuf | Internal service-to-service streams |
+| WebSocket / SSE | Held connection to clients | Live UIs and dashboards |
 
-## Schema management
-- **Schema registry** (Confluent-, Apicurio-, cloud-native-class): stores versions, enforces compatibility (backward, forward, full, none; transitive variants). Distinguish from a **stream registry/catalogue**, which says which streams exist, where, at what volume, under what terms — a schema registry alone doesn't provide discovery.
-- Formats: JSON Schema (readable, weaker evolution discipline), Avro (compact, strong evolution rules), Protobuf (compact, field numbers).
-
-## Technology classes (map to value-chain components)
-| Class | Examples | Component(s) | Fits |
+## Technology classes
+| Class | Examples (not endorsements) | Typical role | Fits |
 |---|---|---|---|
-| Message queue / broker | RabbitMQ, ActiveMQ/Artemis, IBM MQ, SQS, Service Bus | Queue | Work distribution, commands, messaging conversations |
-| Enterprise service bus / iPaaS | MuleSoft, Boomi-class | Queue + Processor (connectors, transforms) | Stable app-to-app integration; beware contextual lock-in and central bottlenecks |
-| Log-based streaming | Kafka (and compatible), Pulsar, Kinesis, Event Hubs | Queue + Processor | Fan-out, replay, series, event sourcing |
-| Event router / bus | EventBridge, Eventarc, Event Grid, Knative Eventing | Interface + routing | Discrete events to functions, SaaS event intake |
-| Functions / serverless | Lambda, Azure Functions, Cloud Run functions | Processor | Single actions per event |
-| Workflow engine | Step Functions, Logic Apps, Temporal, Camunda, Argo | Processor | Multi-step, long-running, human steps, sagas |
-| Stream processor | Flink, Kafka Streams, Spark Structured Streaming, Beam | Processor | Windows, joins, aggregations, enrichment |
-| Stateful / digital-twin processor | Flink stateful functions, twin platforms | Processor | Live model of many related entities |
-| IoT broker | MQTT brokers (Mosquitto, HiveMQ, EMQX), cloud IoT hubs | Queue + Interface | Device fleets |
-| Event mesh / global messaging | Solace, NATS-based utilities | Queue + Interface | Multi-site, edge-to-core distribution |
-| Low-code event platforms | Various | Processor | Visual event logic; check that it is truly event-native |
+| Message broker / queue | RabbitMQ 4.x (native AMQP 1.0, quorum queues, streams), ActiveMQ Artemis, IBM MQ, cloud queue services | Store and forward, work sharing | Commands, Exchange steps, decoupled workers |
+| Partitioned log | Apache Kafka 4.x (KRaft only since 4.0, Mar 2025) and compatible services, Apache Pulsar, cloud log services | Durable ordered streams | Facts for many readers, sequences, replay |
+| Event router | Cloud provider event routers (e.g., Google Eventarc), CloudEvents-aware gateways | Filter and route by envelope | Single-step reactions, SaaS event intake |
+| Functions | Cloud functions services, OpenFaaS-class | One reaction per event | D5 single step |
+| Workflow engine | Temporal, Camunda, AWS Step Functions, Argo Workflows | Long-running state, sagas, human tasks | D5 multi-step |
+| Stream processor | Apache Flink, Kafka Streams, Apache Beam | Windows, joins, enrichment, stateful models | Sequences, live entity models |
+| IoT / MQTT broker | Eclipse Mosquitto, HiveMQ, EMQX, cloud IoT hubs | Device connectivity | ⚑ Churn, fleets |
+| Event mesh | Solace PubSub+, NATS superclusters | Multi-site distribution | Tiered and regional designs (D6) |
+| Integration platform (iPaaS / ESB) | Commercial connector platforms | Prebuilt connectors and mapping | Stable app-to-app links; watch for central bottlenecks and lock-in to the vendor's extension points |
+| Schema registry | Apicurio Registry, Confluent Schema Registry, cloud registries | Schema versions and compatibility | Every channel at B1+ |
 
-## Evaluation criteria (use in design and review)
-1. **Fit to classification**: messaging vs eventing, discrete vs series, single action vs workflow (`05`).
-2. **Semantics**: delivery guarantee, ordering scope, retention and replay, consumer groups, dead-lettering, back-pressure.
-3. **Scale and latency**: throughput, partitions/fan-out, geo-replication, edge options, measured tail latency.
-4. **Openness**: open protocol or de-facto standard; CloudEvents binding; AsyncAPI support; portability out of one cloud's event shapes.
-5. **Security**: mTLS/OAuth, per-topic ACLs, encryption at rest and payload, key management, audit logging, multi-tenancy isolation for partners.
-6. **Manageability**: metrics (lag, rate, errors), tracing propagation, schema registry, self-service subscription, quotas.
-7. **Cross-org readiness**: partner onboarding, entitlements, metering/billing hooks, discovery/catalogue.
-8. **Operations and cost**: managed vs self-run, skills available, pricing model at expected volume, lock-in exit cost.
-9. **Maturity**: community, release cadence, vendor viability. Prefer commodity components for plumbing; spend custom effort on domain processing.
+## How should a technology be evaluated?
+Score each criterion Fit / Partial / Gap for the specific shape code, not in general.
+1. **Semantics match** — queue vs log, ordering scope, retention and replay, dead-lettering, back-pressure (`06`).
+2. **Shape match** — handles the direction, payload style and latency class from `04`.
+3. **Scale and geography** — throughput, partitions, fan-out, geo-replication, edge options, measured tail latency.
+4. **Openness** — open protocol, CloudEvents binding, AsyncAPI support, exit path from provider-specific event shapes.
+5. **Trust controls** — mTLS/OAuth, per-channel permissions, encryption at rest, support for opaque encrypted content, audit logs, partner isolation.
+6. **Operability** — lag, rate and error metrics, trace propagation, quotas, self-service channel creation.
+7. **Partner readiness** — onboarding, entitlements, metering hooks, catalogue integration.
+8. **Run model and cost** — managed vs self-run, skills available, price at expected volume, exit cost.
+9. **Project health** — release cadence, community, vendor viability.
+Rule: rent commodity plumbing; spend custom effort on domain logic and contracts.
+
+## Maintenance
+Re-check this file every six months and after major releases of CloudEvents, AsyncAPI, Kafka, MQTT brokers or OpenTelemetry semantic conventions.

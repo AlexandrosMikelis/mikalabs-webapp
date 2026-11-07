@@ -48,7 +48,7 @@ export function Nav({ solid = false }) {
                   <div className="dd-sub" key={s.slug}>
                     <Link to={`/services/${s.slug}`}>{s.menuTitle || s.title} <span className="dd-caret" aria-hidden="true">›</span></Link>
                     <div className="dd-fly">
-                      <Link to={STORE_URL}>Agent store</Link>
+                      <Link to={STORE_URL}>Agent Store</Link>
                     </div>
                   </div>
                 ) : <Link key={s.slug} to={`/services/${s.slug}`}>{s.menuTitle || s.title}</Link>,
@@ -99,7 +99,7 @@ export function Footer() {
         <span>Γ.Ε.ΜΗ. 196695102000 · Α.Φ.Μ. 803427107 · Δ.Ο.Υ. ΚΕΦΟΔΕ Αττικής</span>
         <span className="foot-links">
           <Link to="/services">Services</Link><Link to="/use-cases">Use cases</Link>
-          <Link to="/vision">Vision</Link><Link to={STORE_URL}>Agent store</Link><Link to="/resources">Resources</Link><Link to="/about">About</Link>
+          <Link to="/vision">Vision</Link><Link to={STORE_URL}>Agent Store</Link><Link to="/resources">Resources</Link><Link to="/about">About</Link>
           <Link to="/contact">Contact</Link><Link to="/terms">Terms</Link><Link to="/privacy">Privacy</Link>
         </span>
       </div>

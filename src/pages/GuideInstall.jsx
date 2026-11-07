@@ -36,7 +36,7 @@ export default function GuideInstall() {
           <section>
             <h2>What's in the zip</h2>
             <ul>{FILES.map(([f, d]) => <li key={f}><b className="mono">{f}</b> · {d}</li>)}</ul>
-            <p>Get agents from the <Link to="/services/ai-agents/store">agent store</Link>.</p>
+            <p>Get agents from the <Link to="/services/ai-agents/store">Agent Store</Link>.</p>
           </section>
           {TOOLS.map(([t, steps]) => (
             <section key={t}>

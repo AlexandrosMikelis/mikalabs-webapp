@@ -23,9 +23,19 @@
 - Sort order must be deterministic (add a unique tiebreaker) or pagination will be inconsistent.
 - Sparse fieldsets (`$select`, `fields=`) reduce payloads for constrained clients. If consumers need heavy cross-resource querying and shaping, consider a GraphQL facade instead of growing an ad-hoc query language.
 - Search (free text, relevance) is different from filtering; model it as its own endpoint or resource if needed.
+- Define how simple query parameters combine and match: repeated or multiple parameters usually mean AND; say whether string matching is exact, prefix or "contains", and whether it is case-sensitive. Undocumented matching rules are a common source of client bugs.
+- Return **query metadata** with results where useful: the filter as the server understood it, page size, and links for the next page and for re-running the query. It helps clients debug and lets them cache or replay a query.
+- Status codes for queries: a valid filter that matches nothing returns **200** with an empty list; an unknown parameter, bad operator or malformed value returns **400** with a problem detail naming the parameter; a single resource addressed by ID that doesn't exist returns **404**. Silently ignoring an unrecognised filter returns the wrong data and is a defect.
+- For rich querying needs, a dedicated query format (a structured query body, GraphQL, OData) beats an ever-growing set of ad-hoc parameters; pick one and document it.
 
-## Batch and bulk operations (general knowledge)
-- If consumers loop over single-item calls (N+1 calls), offer a batch read (`GET /attendees?ids=…` or `POST /attendees:batchGet`) with a size limit.
+## Shaping data access (general guidance)
+- Hide storage: no table names, internal keys or database query syntax in parameters or responses. A client should not be able to tell which database is behind the API.
+- Cap response size on every list and export (count and bytes), and say so in the spec; return a link to the rest rather than truncating silently.
+- Mark cacheability per resource: `Cache-Control` with a max-age that fits how often data changes, `ETag` for revalidation, `no-store` for sensitive data (09).
+- Plan for model change: new optional fields are additive (05); an extension map for optional or tenant-specific properties can absorb change without schema churn, at the cost of weaker typing, so document it and keep core fields explicit.
+
+## Batch and bulk operations
+- If consumers loop over single-item calls (N+1 calls), offer a batch read (`GET /appointments?ids=…` or `POST /appointments:batchGet`) with a size limit.
 - Bulk writes need explicit semantics: all-or-nothing vs per-item results. Return a per-item status array for partial success; don't hide failures behind a single 200.
 - Large exports are better as asynchronous jobs (202 + status resource + download link) than as giant responses.
 
@@ -35,3 +45,4 @@
 3. Is ordering deterministic?
 4. Is the filter/sort convention one standard, applied consistently and documented?
 5. Can a client cause an unbounded or very expensive query?
+6. Are empty results, unknown parameters and missing items given distinct, documented status codes?

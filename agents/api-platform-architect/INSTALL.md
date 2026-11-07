@@ -38,7 +38,7 @@ Paste `system-prompt.md` as the instructions and upload `references/` (or the al
 Use `system-prompt.md` as the system prompt and attach the references as a knowledge collection, or use `api-platform-architect-all-in-one.md` as the system prompt if your model has a context window of 32k tokens or more. Smaller models will follow the review and plan formats less reliably.
 
 ## APIs and agent frameworks (OpenAI, Anthropic, Google, Azure, AWS Bedrock, LangChain, LlamaIndex, CrewAI, n8n …)
-Simplest: send `api-platform-architect-all-in-one.md` as the system message (about 16k tokens).
+Simplest: send `api-platform-architect-all-in-one.md` as the system message (about 19k tokens).
 Leaner: send `system-prompt.md` as the system message and retrieve the relevant `references/` files with your RAG or file-search tool.
 
 Callers can add optional first-line headers:
