@@ -5,12 +5,13 @@ import CtaBand from '../components/CtaBand.jsx'
 import { USE_CASES, findUseCase } from '../data/useCases.js'
 import { findService } from '../data/services.js'
 import { findAgent } from '../data/agents.js'
+import { STORE_ENABLED } from '../data/flags.js'
 
 export default function UseCaseDetail() {
   const { slug } = useParams()
   const u = findUseCase(slug)
   if (!u) return <Navigate to="/use-cases" replace />
-  const agent = u.agent && findAgent(u.agent)
+  const agent = STORE_ENABLED && u.agent && findAgent(u.agent)
 
   return (
     <>
@@ -45,7 +46,7 @@ export default function UseCaseDetail() {
             <span className="eyebrow">Built with</span>
             <p className="uc-links">
               {u.services.map(findService).filter(Boolean).map((s) => <Link key={s.slug} to={`/services/${s.slug}`}>{s.title}</Link>)}
-              {agent && <Link to={`/agents/${agent.slug}`}>Try the free {agent.name} →</Link>}
+              {STORE_ENABLED && agent && <Link to={`/agents/${agent.slug}`}>Try the free {agent.name} →</Link>}
             </p>
           </aside>
         </section>

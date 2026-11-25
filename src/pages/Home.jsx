@@ -4,9 +4,12 @@ import FlowDiagram from '../components/FlowDiagram.jsx'
 import { Link } from 'react-router-dom'
 import ServiceTracks from '../components/ServiceTracks.jsx'
 import CtaBand from '../components/CtaBand.jsx'
+import { STORE_ENABLED } from '../data/flags.js'
 
 const EXPLORE = [
-  ['/services/ai-agents/store', 'Agent Store', 'Free agents for any LLM', 'Ready-made agents you can use today in ChatGPT, Gemini, Copilot, Claude or your own stack.'],
+  STORE_ENABLED
+    ? ['/services/ai-agents/store', 'Agent Store', 'Free agents for any LLM', 'Ready-made agents you can use today in ChatGPT, Gemini, Copilot, Claude or your own stack.']
+    : ['/services', 'Services', 'Consulting and delivery', 'Advice on where AI and automation pay off, and the hands to design, build and run it.'],
   ['/use-cases', 'Use cases', 'Agent workflows in practice', 'Invoice processing, document intake and AI compliance review, step by step.'],
   ['/vision', 'Vision', 'Map, build, automate, run', 'Why we treat automation as a loop, not a one-off project.'],
 ]

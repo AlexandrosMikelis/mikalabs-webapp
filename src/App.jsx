@@ -18,6 +18,7 @@ import UseCaseDetail from './pages/UseCaseDetail.jsx'
 import Resources from './pages/Resources.jsx'
 import GuideInstall from './pages/GuideInstall.jsx'
 import { findUseCase } from './data/useCases.js'
+import { STORE_ENABLED } from './data/flags.js'
 
 const TITLES = {
   '/': 'MIKA Labs — AI & Automation Consultancy',
@@ -38,11 +39,12 @@ function ScrollManager() {
   const { pathname, hash } = useLocation()
   useEffect(() => {
     const path = pathname.replace(/(.)\/$/, '$1')
-    const agent = path.startsWith('/agents/') && findAgent(path.split('/')[2])
+    const agent = STORE_ENABLED && path.startsWith('/agents/') && findAgent(path.split('/')[2])
     const service = path.startsWith('/services/') && findService(path.split('/')[2])
     const useCase = path.startsWith('/use-cases/') && findUseCase(path.split('/')[2])
     const named = agent ? `${agent.name} — MIKA Labs agents` : (service || useCase) && `${(service || useCase).title} — MIKA Labs`
-    document.title = TITLES[path] || named || TITLES['/']
+    const hidden = !STORE_ENABLED && (path === '/services/ai-agents/store' || path.startsWith('/resources'))
+    document.title = (!hidden && TITLES[path]) || named || TITLES['/']
     if (hash) {
       const el = document.getElementById(hash.slice(1))
       if (el) el.scrollIntoView()
@@ -60,21 +62,28 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/agents" element={<Navigate to={STORE_URL} replace />} />
         <Route path="/vision" element={<Vision />} />
-        <Route path="/agents/:slug" element={<AgentDetail />} />
         <Route path="/team" element={<Navigate to="/about" replace />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/services/ai-agents/store" element={<Store />} />
+        {/* store off: these URLs fall through to the home redirect below */}
+        {STORE_ENABLED ? (
+          <>
+            <Route path="/agents" element={<Navigate to={STORE_URL} replace />} />
+            <Route path="/agents/:slug" element={<AgentDetail />} />
+            <Route path="/services/ai-agents/store" element={<Store />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/install-an-agent" element={<GuideInstall />} />
+          </>
+        ) : (
+          <Route path="/services/ai-agents/store" element={<Navigate to="/services/ai-agents" replace />} />
+        )}
         <Route path="/services/:slug" element={<ServiceDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/platform" element={<Navigate to="/services" replace />} />
         <Route path="/use-cases" element={<UseCases />} />
         <Route path="/use-cases/:slug" element={<UseCaseDetail />} />
-        <Route path="/resources" element={<Resources />} />
-        <Route path="/resources/install-an-agent" element={<GuideInstall />} />
         {/* old static URLs */}
         <Route path="/index.html" element={<Navigate to="/" replace />} />
         <Route path="/company.html" element={<Navigate to="/" replace />} />

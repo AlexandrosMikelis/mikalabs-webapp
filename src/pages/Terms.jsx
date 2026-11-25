@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Hero, Footer, EMAIL } from '../components/Layout.jsx'
+import { STORE_ENABLED } from '../data/flags.js'
 
 const Mail = () => <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
 
@@ -11,7 +12,7 @@ export default function Terms() {
         <div className="herobody left">
           <span className="eyebrow">Terms</span>
           <h1>Terms of use.</h1>
-          <p>The rules for using this website and the free agents you can download from it.</p>
+          <p>{STORE_ENABLED ? 'The rules for using this website and the free agents you can download from it.' : 'The rules for using this website.'}</p>
         </div>
       </Hero>
 
@@ -30,7 +31,7 @@ export default function Terms() {
             <p>The site is provided for information. We keep it accurate, but it is not an offer, and services are agreed only in a separate written contract.</p>
           </section>
 
-          <section id="agents">
+          {STORE_ENABLED && <section id="agents">
             <h2>Downloadable agents</h2>
             <ul>
               <li><b>Free to use.</b> You may download, use and adapt the agents in our <Link to="/services/ai-agents/store">Agent Store</Link> for personal and business use, free of charge.</li>
@@ -39,11 +40,11 @@ export default function Terms() {
               <li><b>Not professional advice.</b> An agent's output is not legal, compliance, financial or other professional advice. Check important results with a qualified person before acting on them.</li>
               <li><b>Your AI provider.</b> You choose and run the AI tool or model. Its terms, costs and data handling apply, and you are responsible for what you send to it, including any personal data.</li>
             </ul>
-          </section>
+          </section>}
 
           <section>
             <h2>Liability</h2>
-            <p>To the extent the law allows, MIKA Labs is not liable for loss or damage arising from your use of this website or of the downloadable agents. Nothing in these terms limits liability that cannot be limited by law, such as liability for intent or gross negligence.</p>
+            <p>To the extent the law allows, MIKA Labs is not liable for loss or damage arising from your use of this website{STORE_ENABLED && ' or of the downloadable agents'}. Nothing in these terms limits liability that cannot be limited by law, such as liability for intent or gross negligence.</p>
           </section>
 
           <section>

@@ -2,6 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { Hero, Footer } from '../components/Layout.jsx'
 import CtaBand from '../components/CtaBand.jsx'
 import { STORE_URL } from '../components/AgentStore.jsx'
+import { STORE_ENABLED } from '../data/flags.js'
 import { SERVICES, TRACKS, findService } from '../data/services.js'
 import mlopsInfinity from '../assets/mlops-infinity.svg'
 
@@ -46,7 +47,7 @@ export default function ServiceDetail() {
           </aside>
         </section>
 
-        {s.slug === 'ai-agents' && (
+        {STORE_ENABLED && s.slug === 'ai-agents' && (
           <section className="wrap promo-sec">
             <Link className="store-promo" to={STORE_URL}>
               <span><b>Agent Store</b><small>Ready-made agents, free, for ChatGPT, Gemini, Copilot, Claude or any LLM.</small></span>
@@ -55,7 +56,7 @@ export default function ServiceDetail() {
           </section>
         )}
 
-        {s.slug === 'ai-governance' && (
+        {STORE_ENABLED && s.slug === 'ai-governance' && (
           <section className="wrap promo-sec">
             <Link className="store-promo" to="/agents/ai-ethics-advisor">
               <span><b>Themis, our AI ethics agent</b><small>Free for a first-pass ethics and AI Act review, for any LLM.</small></span>

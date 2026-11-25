@@ -6,11 +6,12 @@ import { AGENTS } from '../src/data/agents.js'
 import { SERVICES } from '../src/data/services.js'
 import { USE_CASES } from '../src/data/useCases.js'
 import { packageAgent } from './package-agent.js'
+import { STORE_ENABLED } from '../src/data/flags.js'
 
-const ROUTES = ['about', 'agents', 'privacy', 'services', 'contact', 'terms', 'platform', 'use-cases', 'vision', 'services/ai-agents/store',
-  'resources', 'resources/install-an-agent',
+const STORE_ROUTES = ['agents', 'services/ai-agents/store', 'resources', 'resources/install-an-agent', ...AGENTS.map((a) => `agents/${a.slug}`)]
+const ROUTES = ['about', 'privacy', 'services', 'contact', 'terms', 'platform', 'use-cases', 'vision',
   'team', // old URLs: the app redirects /team to /about and /agents to the store
-  ...AGENTS.map((a) => `agents/${a.slug}`), ...SERVICES.map((s) => `services/${s.slug}`),
+  ...(STORE_ENABLED ? STORE_ROUTES : []), ...SERVICES.map((s) => `services/${s.slug}`),
   ...USE_CASES.map((u) => `use-cases/${u.slug}`)]
 
 for (const r of ROUTES) {
@@ -19,8 +20,9 @@ for (const r of ROUTES) {
 }
 copyFileSync('dist/index.html', 'dist/404.html') // unknown URLs still load the app, which redirects home
 
-mkdirSync('dist/downloads', { recursive: true })
-const names = readdirSync('agents').filter((n) => !n.startsWith('.'))
+// store off: no zips are published
+const names = STORE_ENABLED ? readdirSync('agents').filter((n) => !n.startsWith('.')) : []
+if (STORE_ENABLED) mkdirSync('dist/downloads', { recursive: true })
 for (const name of names) {
   const out = resolve(`dist/downloads/${name}.zip`)
   rmSync(out, { force: true })

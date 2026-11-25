@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { SERVICES, TRACKS } from '../data/services.js'
 import { STORE_URL } from './AgentStore.jsx'
+import { STORE_ENABLED } from '../data/flags.js'
 
 export const EMAIL = 'info@mikalaboratories.com'
 
@@ -44,7 +45,7 @@ export function Nav({ solid = false }) {
               <div className="dd-menu">
                 {SERVICES.flatMap((s, i) => [
                   s.track !== SERVICES[i - 1]?.track && <span className="dd-group" key={`g-${s.track}`}>{TRACKS.find((t) => t.key === s.track).label}</span>,
-                  s.slug === 'ai-agents' ? (
+                  STORE_ENABLED && s.slug === 'ai-agents' ? (
                   <div className="dd-sub" key={s.slug}>
                     <Link to={`/services/${s.slug}`}>{s.menuTitle || s.title} <span className="dd-caret" aria-hidden="true">›</span></Link>
                     <div className="dd-fly">
@@ -99,7 +100,7 @@ export function Footer() {
         <span>Γ.Ε.ΜΗ. 196695102000 · Α.Φ.Μ. 803427107 · Δ.Ο.Υ. ΚΕΦΟΔΕ Αττικής</span>
         <span className="foot-links">
           <Link to="/services">Services</Link><Link to="/use-cases">Use cases</Link>
-          <Link to="/vision">Vision</Link><Link to={STORE_URL}>Agent Store</Link><Link to="/resources">Resources</Link><Link to="/about">About</Link>
+          <Link to="/vision">Vision</Link>{STORE_ENABLED && <><Link to={STORE_URL}>Agent Store</Link><Link to="/resources">Resources</Link></>}<Link to="/about">About</Link>
           <Link to="/contact">Contact</Link><Link to="/terms">Terms</Link><Link to="/privacy">Privacy</Link>
         </span>
       </div>
